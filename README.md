@@ -10,6 +10,11 @@ npm run dev
 npm run build
 ```
 
+O projeto agora roda como uma aplicação Next local comum, sem autenticação
+externa, sem configuração de hosting gerenciado e sem runtime de Worker. Para
+publicar em um domínio depois, configure a variável `NEXT_PUBLIC_SITE_URL` com
+a URL final do site antes do build.
+
 ## Observações para publicação
 
 - Substituir as fotografias temporárias por imagens oficiais, quando disponíveis.
