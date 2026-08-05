@@ -4,15 +4,11 @@
 import {
   ArrowRight,
   AtSign,
-  BadgeCheck,
   Building2,
   CalendarCheck,
-  LockKeyhole,
   Mail,
   MapPin,
   Phone,
-  ShieldCheck,
-  UserRoundCheck,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
@@ -32,13 +28,6 @@ const temporaryImages = {
   hero: "/hero-office.webp",
   about: "/about-office.webp",
 };
-
-const values = [
-  { label: "Estratégia", icon: BadgeCheck },
-  { label: "Segurança jurídica", icon: ShieldCheck },
-  { label: "Atendimento personalizado", icon: UserRoundCheck },
-  { label: "Confidencialidade", icon: LockKeyhole },
-];
 
 const serviceSteps = [
   {
@@ -253,18 +242,6 @@ export default function Home() {
                 loading="lazy"
               />
             </div>
-          </div>
-
-          <div className="section-inner value-grid" aria-label="Valores do escritório">
-            {values.map((value) => {
-              const Icon = value.icon;
-              return (
-                <div className="value-item" key={value.label} data-reveal>
-                  <Icon aria-hidden="true" />
-                  <span>{value.label}</span>
-                </div>
-              );
-            })}
           </div>
         </section>
 

@@ -4,7 +4,6 @@ import {
   officeAddress,
   officeEmail,
   officePhone,
-  whatsappUrl,
 } from "../site-data";
 
 export function SiteFooter() {
@@ -29,17 +28,10 @@ export function SiteFooter() {
           <p>{officePhone}</p>
           <p>{officeEmail}</p>
           <p>{officeAddress}</p>
-          <p>Instagram: [INSERIR LINK OFICIAL]</p>
-          <p>Inscrição da sociedade ou OAB: [INSERIR]</p>
+          <p>Instagram: @carmemtestoni</p>
+          <p>OAB/SC 58.578</p>
         </div>
 
-        <div className="footer-links">
-          <Link href="/#contato">Política de Privacidade</Link>
-          <Link href="/#contato">Aviso de Privacidade</Link>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer">
-            WhatsApp
-          </a>
-        </div>
       </div>
       <div className="footer-bottom">
         © 2026 Carmem Testoni | Advogados Associados. Todos os direitos
