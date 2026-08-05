@@ -6,9 +6,9 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
-    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
-    "start": "NEXT_TELEMETRY_DISABLED=1 next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern .next --ignore-pattern out"
   },

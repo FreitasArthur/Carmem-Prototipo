@@ -5,146 +5,39 @@ import {
   ArrowRight,
   AtSign,
   BadgeCheck,
-  BriefcaseBusiness,
   Building2,
   CalendarCheck,
-  Check,
-  FileText,
-  HeartHandshake,
-  Landmark,
   LockKeyhole,
   Mail,
   MapPin,
-  Menu,
-  MessageCircle,
   Phone,
-  ScrollText,
   ShieldCheck,
   UserRoundCheck,
-  UsersRound,
-  X,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
-import { useEffect, useMemo, useState } from "react";
-
-const firmName = "Carmem Testoni | Advogados Associados";
-const officePhone = "(47) 99204-2005";
-const officeWhatsapp = "5547992042005";
-const officeEmail = "[INSERIR OU CONFIRMAR E-MAIL]";
-const officeAddress = "[CONFIRMAR ENDEREÇO OFICIAL ANTES DA PUBLICAÇÃO]";
-const mapsUrl =
-  "https://www.google.com/maps/search/?api=1&query=Carmem%20Testoni%20Advogados%20Associados%20Joinville%20SC";
-const whatsappMessage =
-  "Olá. Acessei o site da Carmem Testoni | Advogados Associados e gostaria de solicitar informações sobre o atendimento.";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { SiteFooter } from "./components/site-footer";
+import { SiteHeader } from "./components/site-header";
+import {
+  firmName,
+  officeAddress,
+  officeEmail,
+  officePhone,
+  officeWhatsapp,
+  whatsappUrl,
+} from "./site-data";
 
 const temporaryImages = {
   hero: "/hero-office.webp",
   about: "/about-office.webp",
-  enterprise: "/enterprise-meeting.webp",
 };
-
-const navigation = [
-  { label: "Início", href: "#inicio" },
-  { label: "Escritório", href: "#escritorio" },
-  { label: "Áreas de atuação", href: "#areas" },
-  { label: "Diferenciais", href: "#diferenciais" },
-  { label: "Atendimento", href: "#atendimento" },
-  { label: "Contato", href: "#contato" },
-];
 
 const values = [
   { label: "Estratégia", icon: BadgeCheck },
   { label: "Segurança jurídica", icon: ShieldCheck },
   { label: "Atendimento personalizado", icon: UserRoundCheck },
   { label: "Confidencialidade", icon: LockKeyhole },
-];
-
-const practiceAreas = [
-  {
-    title: "Planejamento patrimonial e sucessório",
-    icon: ShieldCheck,
-    text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
-    items: [
-      "Planejamento sucessório",
-      "Holdings familiares",
-      "Organização patrimonial",
-      "Testamentos",
-      "Doações",
-      "Estruturação da sucessão familiar",
-    ],
-  },
-  {
-    title: "Empresarial",
-    icon: BriefcaseBusiness,
-    text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
-    items: [
-      "Contratos empresariais",
-      "Organização societária",
-      "Consultoria preventiva",
-      "Conflitos societários",
-      "Governança familiar e empresarial",
-    ],
-  },
-  {
-    title: "Tributário",
-    icon: Landmark,
-    text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
-    items: [
-      "Consultoria tributária",
-      "Planejamento tributário",
-      "Defesa administrativa",
-      "Contencioso tributário",
-      "Revisão de operações empresariais",
-    ],
-  },
-  {
-    title: "Direito das sucessões",
-    icon: ScrollText,
-    text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
-    items: [
-      "Inventário judicial",
-      "Inventário extrajudicial",
-      "Partilha de bens",
-      "Testamentos",
-      "Orientação a herdeiros",
-    ],
-  },
-  {
-    title: "Direito de família",
-    icon: HeartHandshake,
-    text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
-    items: [
-      "Divórcio",
-      "União estável",
-      "Guarda",
-      "Pensão alimentícia",
-      "Partilha",
-      "Planejamento matrimonial",
-    ],
-  },
-];
-
-const differentiators = [
-  {
-    title: "Análise individualizada",
-    icon: FileText,
-    text: "Cada situação é avaliada de acordo com suas particularidades, objetivos e possíveis impactos jurídicos.",
-  },
-  {
-    title: "Atuação preventiva",
-    icon: ShieldCheck,
-    text: "O trabalho preventivo permite identificar riscos e estruturar decisões com maior segurança.",
-  },
-  {
-    title: "Visão integrada",
-    icon: UsersRound,
-    text: "As questões familiares, patrimoniais, empresariais e tributárias são analisadas de forma conjunta quando necessário.",
-  },
-  {
-    title: "Atendimento presencial e on-line",
-    icon: CalendarCheck,
-    text: "O escritório realiza atendimentos presenciais em Joinville e também oferece atendimento por meios digitais.",
-  },
 ];
 
 const serviceSteps = [
@@ -183,18 +76,9 @@ type FormState = typeof initialForm;
 type FormStatus = "idle" | "error" | "success";
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
-
-  const whatsappUrl = useMemo(
-    () =>
-      `https://wa.me/${officeWhatsapp}?text=${encodeURIComponent(
-        whatsappMessage,
-      )}`,
-    [],
-  );
 
   useEffect(() => {
     document.documentElement.classList.add("reveal-ready");
@@ -235,10 +119,6 @@ export default function Home() {
       document.documentElement.classList.remove("reveal-ready");
     };
   }, []);
-
-  function handleNavigationClick() {
-    setIsMenuOpen(false);
-  }
 
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -308,55 +188,7 @@ export default function Home() {
 
   return (
     <>
-      <a className="skip-link" href="#conteudo">
-        Pular para o conteúdo
-      </a>
-
-      <header className="site-header">
-        <nav className="nav-shell" aria-label="Navegação principal">
-          <a className="brand" href="#inicio" onClick={handleNavigationClick}>
-            <span className="brand-mark" aria-hidden="true">
-              CT
-            </span>
-            <span className="brand-text">
-              <strong>Carmem Testoni</strong>
-              <span>Advogados Associados</span>
-            </span>
-          </a>
-
-          <button
-            className="menu-toggle"
-            type="button"
-            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={isMenuOpen}
-            aria-controls="menu-principal"
-            onClick={() => setIsMenuOpen((current) => !current)}
-          >
-            {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-          </button>
-
-          <div
-            className={`nav-links ${isMenuOpen ? "is-open" : ""}`}
-            id="menu-principal"
-          >
-            {navigation.map((item) => (
-              <a key={item.href} href={item.href} onClick={handleNavigationClick}>
-                {item.label}
-              </a>
-            ))}
-            <a
-              className="nav-contact"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={handleNavigationClick}
-            >
-              <MessageCircle aria-hidden="true" />
-              Entrar em contato
-            </a>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main id="conteudo">
         <section
@@ -367,7 +199,7 @@ export default function Home() {
           <div className="hero-overlay" />
           <div className="section-inner hero-grid">
             <div className="hero-copy" data-reveal>
-              <p className="eyebrow">Carmem Testoni | Advogados Associados</p>
+              <p className="eyebrow">Escritório de Advocacia | Carmem Testoni</p>
               <h1>Proteção patrimonial e assessoria jurídica estratégica</h1>
               <p className="hero-lead">
                 Soluções jurídicas personalizadas para famílias, patrimônios e
@@ -375,12 +207,12 @@ export default function Home() {
                 particularidades de cada cliente.
               </p>
               <div className="hero-actions" aria-label="Ações principais">
-                <a className="button button-primary" href="#areas">
+                <Link className="button button-primary" href="/areas-de-atuacao">
                   Conheça nossa atuação
                   <ArrowRight aria-hidden="true" />
-                </a>
+                </Link>
                 <a
-                  className="button button-quiet"
+                  className="button button-primary"
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
@@ -393,10 +225,6 @@ export default function Home() {
               </p>
             </div>
 
-            <aside className="hero-panel" aria-label="Atuação principal" data-reveal>
-              <span>Atuação consultiva, preventiva e contenciosa</span>
-              <strong>Planejamento patrimonial, sucessório, empresarial e familiar.</strong>
-            </aside>
           </div>
         </section>
 
@@ -440,99 +268,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section practice-section" id="areas">
-          <div className="section-inner">
-            <div className="section-heading centered" data-reveal>
-              <p className="eyebrow">Áreas de atuação</p>
-              <h2>Áreas de atuação</h2>
-              <p>
-                Atuação jurídica preventiva, consultiva e contenciosa, de acordo
-                com as necessidades de cada cliente.
-              </p>
-            </div>
-
-            <div className="practice-grid">
-              {practiceAreas.map((area) => {
-                const Icon = area.icon;
-                return (
-                  <article className="practice-card" key={area.title} data-reveal>
-                    <div className="card-icon">
-                      <Icon aria-hidden="true" />
-                    </div>
-                    <h3>{area.title}</h3>
-                    <p>{area.text}</p>
-                    <ul>
-                      {area.items.map((item) => (
-                        <li key={item}>
-                          <Check aria-hidden="true" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="enterprise-section" aria-labelledby="empresas-familiares">
-          <div className="section-inner enterprise-grid">
-            <div className="enterprise-media" data-reveal>
-              <img
-                src={temporaryImages.enterprise}
-                alt="Imagem temporária de reunião profissional com análise de documentos"
-                loading="lazy"
-              />
-            </div>
-
-            <div className="enterprise-copy" data-reveal>
-              <p className="eyebrow">Empresas familiares</p>
-              <h2 id="empresas-familiares">
-                Estratégia jurídica para empresas e famílias empresárias
-              </h2>
-              <p>
-                A continuidade de uma empresa familiar depende de decisões bem
-                estruturadas. A assessoria jurídica auxilia na organização
-                societária, patrimonial e sucessória, contribuindo para a
-                prevenção de conflitos e para a construção de regras claras
-                entre familiares, sócios e sucessores.
-              </p>
-              <ul className="gold-list">
-                <li>Organização societária e patrimonial</li>
-                <li>Governança e continuidade empresarial</li>
-                <li>Planejamento da sucessão familiar</li>
-              </ul>
-              <a className="button button-champagne" href="#contato">
-                Conhecer a atuação empresarial
-                <ArrowRight aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="section" id="diferenciais">
-          <div className="section-inner">
-            <div className="section-heading" data-reveal>
-              <p className="eyebrow">Diferenciais</p>
-              <h2>Uma atuação próxima, técnica e personalizada</h2>
-            </div>
-
-            <div className="differentials-grid">
-              {differentiators.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article className="differential-item" key={item.title} data-reveal>
-                    <Icon aria-hidden="true" />
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
         <section className="section process-section" id="atendimento">
           <div className="section-inner">
             <div className="section-heading centered" data-reveal>
@@ -548,47 +283,6 @@ export default function Home() {
                   <p>{step.text}</p>
                 </article>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section founder-section" aria-labelledby="fundadora">
-          <div className="section-inner founder-grid">
-            <div className="founder-photo" data-reveal>
-              <div className="photo-placeholder" role="img" aria-label="Espaço reservado para fotografia profissional oficial">
-                <span>CT</span>
-                <p>Fotografia oficial</p>
-              </div>
-            </div>
-
-            <div className="section-copy" data-reveal>
-              <p className="eyebrow">Sócia-fundadora</p>
-              <h2 id="fundadora">Carmem Testoni</h2>
-              <p className="role">Sócia-fundadora</p>
-              <p>
-                Advogada com atuação voltada às áreas de Direito das Sucessões,
-                Direito Empresarial, Direito Tributário e Direito de Família,
-                especialmente em demandas relacionadas à proteção patrimonial e
-                ao planejamento sucessório.
-              </p>
-              <dl className="confirmation-list">
-                <div>
-                  <dt>Número da OAB</dt>
-                  <dd>[INSERIR OAB]</dd>
-                </div>
-                <div>
-                  <dt>Formação acadêmica</dt>
-                  <dd>[CONFIRMAR]</dd>
-                </div>
-                <div>
-                  <dt>Pós-graduações</dt>
-                  <dd>[CONFIRMAR]</dd>
-                </div>
-                <div>
-                  <dt>Experiência profissional</dt>
-                  <dd>[CONFIRMAR]</dd>
-                </div>
-              </dl>
             </div>
           </div>
         </section>
@@ -650,27 +344,6 @@ export default function Home() {
                   </span>
                 </p>
               </address>
-
-              <div className="contact-actions">
-                <a
-                  className="button button-primary"
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MessageCircle aria-hidden="true" />
-                  WhatsApp
-                </a>
-                <a
-                  className="button button-outline"
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MapPin aria-hidden="true" />
-                  Abrir localização
-                </a>
-              </div>
 
               <iframe
                 className="map-frame"
@@ -748,7 +421,7 @@ export default function Home() {
                 <textarea
                   id="message"
                   name="message"
-                  rows={5}
+                  rows={4}
                   value={form.message}
                   onChange={handleFieldChange}
                   required
@@ -787,43 +460,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="section-inner footer-grid">
-          <div>
-            <a className="footer-brand" href="#inicio">
-              <span className="brand-mark" aria-hidden="true">
-                CT
-              </span>
-              <span>{firmName}</span>
-            </a>
-            <p>
-              As informações disponibilizadas neste site possuem caráter
-              exclusivamente informativo e não substituem uma análise jurídica
-              individualizada.
-            </p>
-          </div>
-
-          <div className="footer-contact">
-            <p>{officePhone}</p>
-            <p>{officeEmail}</p>
-            <p>{officeAddress}</p>
-            <p>Instagram: [INSERIR LINK OFICIAL]</p>
-            <p>Inscrição da sociedade ou OAB: [INSERIR]</p>
-          </div>
-
-          <div className="footer-links">
-            <a href="#contato">Política de Privacidade</a>
-            <a href="#contato">Aviso de Privacidade</a>
-            <a href={whatsappUrl} target="_blank" rel="noreferrer">
-              WhatsApp
-            </a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          © 2026 Carmem Testoni | Advogados Associados. Todos os direitos
-          reservados.
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

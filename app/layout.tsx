@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   keywords,
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Carmem Testoni | Advogados Associados",
+    title: "Escritório de Advocacia | Carmem Testoni",
     description:
       "Assessoria jurídica estratégica para famílias, patrimônios e empresas em Joinville e on-line.",
     type: "website",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Carmem Testoni | Advogados Associados",
+        alt: "Escritório de Advocacia | Carmem Testoni",
       },
     ],
   },
