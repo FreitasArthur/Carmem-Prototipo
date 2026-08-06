@@ -89,3 +89,55 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(page, /Direito empresarial/);
   assert.match(page, /Enviar mensagem/);
 });
+
+test("keeps header navigation destinations predictable", async () => {
+  const [header, page] = await Promise.all([
+    readFile(new URL("../app/components/site-header.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(header, /href="\/"/);
+  assert.match(header, /href: "\/#escritorio"/);
+  assert.match(header, /href: "\/#contato"/);
+  assert.match(header, /target\.scrollIntoView/);
+  assert.match(header, /window\.scrollTo/);
+  assert.match(page, /id="inicio"/);
+  assert.match(page, /id="escritorio"/);
+  assert.match(page, /id="contato"/);
+});
+
+test("uses the official symbol in the footer and browser metadata", async () => {
+  const [footer, layout] = await Promise.all([
+    readFile(new URL("../app/components/site-footer.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+  ]);
+  const symbolPath = /logo-carmem-testoni-icone-redondo-transparente\.png/;
+
+  assert.match(footer, symbolPath);
+  assert.match(footer, /href="\/#inicio"/);
+  assert.match(layout, symbolPath);
+  assert.doesNotMatch(footer, /brand-mark/);
+});
+
+test("provides a placeholder page for every practice area", async () => {
+  const practiceAreas = [
+    ["planejamento-patrimonial-e-sucessorio", "Planejamento patrimonial e sucessório"],
+    ["empresarial", "Empresarial"],
+    ["tributario", "Tributário"],
+    ["direito-das-sucessoes", "Direito das sucessões"],
+    ["direito-de-familia", "Direito de família"],
+  ];
+
+  for (const [slug, title] of practiceAreas) {
+    const detailPage = await readFile(
+      new URL(`../app/areas-de-atuacao/${slug}/page.tsx`, import.meta.url),
+      "utf8",
+    );
+
+    assert.match(detailPage, new RegExp(title));
+    assert.match(detailPage, /<SiteHeader \/>/);
+    assert.match(detailPage, /practice-detail-placeholder/);
+    assert.match(detailPage, /Insira aqui o conteúdo desta área de atuação/);
+    assert.match(detailPage, /<SiteFooter \/>/);
+  }
+});

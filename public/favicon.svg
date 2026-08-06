@@ -1,5 +1,0 @@
-<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CT">
-  <rect x="4" y="4" width="56" height="56" rx="8" fill="#491520"/>
-  <rect x="8.5" y="8.5" width="47" height="47" rx="5.5" fill="none" stroke="#C4A06A" stroke-width="1"/>
-  <text x="32" y="39" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#EADCC0">CT</text>
-</svg>

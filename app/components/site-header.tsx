@@ -4,7 +4,7 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import { whatsappUrl } from "../site-data";
 
 const navigation = [
@@ -51,6 +51,58 @@ export function SiteHeader() {
     setIsMenuOpen(false);
   }
 
+  function handleInternalNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) {
+    closeMenu();
+
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    const destination = new URL(href, window.location.href);
+
+    if (destination.pathname !== pathname) {
+      return;
+    }
+
+    const targetId = destination.hash.slice(1);
+    const target = targetId ? document.getElementById(targetId) : null;
+
+    if (targetId && !target) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const destinationUrl = `${destination.pathname}${destination.hash}`;
+    const currentUrl = `${window.location.pathname}${window.location.hash}`;
+
+    if (destinationUrl !== currentUrl) {
+      window.history.pushState(null, "", destinationUrl);
+    }
+
+    const behavior: ScrollBehavior = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches
+      ? "auto"
+      : "smooth";
+
+    if (target) {
+      target.scrollIntoView({ behavior, block: "start" });
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior });
+  }
+
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -59,12 +111,16 @@ export function SiteHeader() {
 
       <header className="site-header">
         <nav className="nav-shell" aria-label="Navegação principal">
-          <Link className="brand" href="/" onClick={closeMenu}>
+          <Link
+            className="brand"
+            href="/"
+            onClick={(event) => handleInternalNavigation(event, "/")}
+          >
             <img
               className="brand-logo"
-              src="/carmem-testoni-logo.png"
-              width="700"
-              height="300"
+              src="/logo-nova-carmem.png"
+              width="2172"
+              height="724"
               alt="Carmem Testoni"
             />
           </Link>
@@ -96,7 +152,9 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
-                  onClick={closeMenu}
+                  onClick={(event) =>
+                    handleInternalNavigation(event, item.href)
+                  }
                 >
                   {item.label}
                 </Link>

@@ -1,18 +1,18 @@
 :root {
   --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --font-sans: Aptos, "Segoe UI Variable Text", "Segoe UI", Helvetica, Arial, sans-serif;
-  --wine: #3f4245;
-  --wine-strong: #24292e;
-  --wine-soft: #54595f;
-  --champagne: #d4b9b4;
-  --champagne-light: #f5e6e3;
-  --ivory: #f9fafa;
+  --wine: #35483c;
+  --wine-strong: #28382f;
+  --wine-soft: #516557;
+  --champagne: #e9ddc8;
+  --champagne-light: #f6f0e6;
+  --ivory: #fafbf9;
   --paper: #ffffff;
-  --warm: #f4f4f5;
-  --line: #dfe2e4;
-  --graphite: #3f4245;
-  --muted: #69727d;
-  --shadow: 0 18px 42px rgba(36, 41, 46, 0.1);
+  --warm: #f2eee6;
+  --line: #deddd7;
+  --graphite: #35483c;
+  --muted: #657269;
+  --shadow: 0 18px 42px rgba(40, 56, 47, 0.11);
   --radius: 8px;
   --header-height: 104px;
 }
@@ -126,7 +126,7 @@ p {
   position: fixed;
   inset: 0 0 auto;
   z-index: 100;
-  border-bottom: 1px solid rgba(197, 203, 208, 0.72);
+  border-bottom: 1px solid rgba(53, 72, 60, 0.16);
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
 }
@@ -154,25 +154,24 @@ p {
 }
 
 .brand-logo {
-  width: clamp(210px, 18vw, 250px);
+  width: clamp(300px, 22vw, 350px);
+  max-width: none;
   height: auto;
   display: block;
+  flex: 0 0 auto;
+  margin-right: clamp(-24px, -1.75vw, -20px);
+  margin-left: clamp(-30px, -2.2vw, -25px);
 }
 
-.brand-mark {
-  width: 46px;
-  height: 46px;
-  display: inline-grid;
-  place-items: center;
+.footer-symbol {
+  width: 52px;
+  height: 52px;
+  display: block;
   flex: 0 0 auto;
-  border: 1px solid rgba(212, 185, 180, 0.82);
-  border-radius: var(--radius);
-  background: linear-gradient(145deg, var(--wine), var(--wine-soft));
-  color: var(--champagne-light);
-  font-family: var(--font-display);
-  font-size: 1.22rem;
-  font-weight: 700;
-  line-height: 1;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 8px 20px rgba(25, 36, 30, 0.22);
 }
 
 .brand-text {
@@ -318,9 +317,9 @@ a.social-link:focus-visible {
   background-image:
     linear-gradient(
       90deg,
-      rgba(18, 21, 25, 0.92),
-      rgba(36, 41, 46, 0.76) 44%,
-      rgba(63, 66, 69, 0.3)
+      rgba(25, 36, 30, 0.94),
+      rgba(40, 56, 47, 0.8) 44%,
+      rgba(53, 72, 60, 0.34)
     ),
     var(--hero-image);
   background-position: center;
@@ -409,7 +408,7 @@ a.social-link:focus-visible {
 .button-primary {
   background: var(--wine);
   color: var(--paper);
-  box-shadow: 0 12px 28px rgba(36, 41, 46, 0.16);
+  box-shadow: 0 12px 28px rgba(40, 56, 47, 0.18);
 }
 
 .button-primary:hover,
@@ -536,7 +535,7 @@ a.social-link:focus-visible {
 
 .practice-section {
   background:
-    linear-gradient(180deg, rgba(249, 250, 250, 0.96), rgba(244, 244, 245, 0.78)),
+    linear-gradient(180deg, rgba(250, 251, 249, 0.96), rgba(242, 238, 230, 0.66)),
     var(--ivory);
 }
 
@@ -558,7 +557,7 @@ a.social-link:focus-visible {
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.88);
   padding: 34px 30px;
-  box-shadow: 0 12px 30px rgba(36, 41, 46, 0.06);
+  box-shadow: 0 12px 30px rgba(40, 56, 47, 0.07);
   text-align: center;
   transition:
     border-color 180ms ease,
@@ -567,7 +566,7 @@ a.social-link:focus-visible {
 }
 
 .practice-card:hover {
-  border-color: rgba(212, 185, 180, 0.82);
+  border-color: rgba(233, 221, 200, 0.92);
   box-shadow: var(--shadow);
   transform: translateY(-4px);
 }
@@ -577,7 +576,7 @@ a.social-link:focus-visible {
   height: 44px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(212, 185, 180, 0.58);
+  border: 1px solid rgba(233, 221, 200, 0.78);
   border-radius: 6px;
   color: var(--wine);
   margin: 0 auto 22px;
@@ -662,7 +661,7 @@ a.social-link:focus-visible {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(36, 41, 46, 0.99), rgba(63, 66, 69, 0.96)),
+    linear-gradient(135deg, rgba(40, 56, 47, 0.99), rgba(53, 72, 60, 0.96)),
     var(--wine);
   padding: 104px 0;
 }
@@ -742,7 +741,7 @@ a.social-link:focus-visible {
 
 .founder-section {
   background:
-    linear-gradient(90deg, rgba(249, 250, 250, 0.98), rgba(255, 255, 255, 0.84)),
+    linear-gradient(90deg, rgba(250, 251, 249, 0.98), rgba(255, 255, 255, 0.86)),
     var(--ivory);
 }
 
@@ -759,7 +758,7 @@ a.social-link:focus-visible {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background:
-    linear-gradient(135deg, rgba(36, 41, 46, 0.96), rgba(84, 89, 95, 0.9)),
+    linear-gradient(135deg, rgba(40, 56, 47, 0.97), rgba(81, 101, 87, 0.91)),
     var(--wine);
   box-shadow: var(--shadow);
   color: var(--champagne-light);
@@ -771,7 +770,7 @@ a.social-link:focus-visible {
   place-items: center;
   width: 96px;
   height: 96px;
-  border: 1px solid rgba(245, 230, 227, 0.68);
+  border: 1px solid rgba(246, 240, 230, 0.68);
   border-radius: var(--radius);
   font-family: var(--font-display), Georgia, serif;
   font-size: 2.4rem;
@@ -847,7 +846,7 @@ a.social-link:focus-visible {
   border-radius: var(--radius);
   background: var(--ivory);
   padding: 30px;
-  box-shadow: 0 12px 32px rgba(36, 41, 46, 0.07);
+  box-shadow: 0 12px 32px rgba(40, 56, 47, 0.08);
 }
 
 .contact-details h3 {
@@ -944,7 +943,7 @@ select:focus,
 textarea:focus {
   border-color: var(--champagne);
   background: var(--paper);
-  box-shadow: 0 0 0 4px rgba(212, 185, 180, 0.18);
+  box-shadow: 0 0 0 4px rgba(233, 221, 200, 0.32);
 }
 
 .privacy-check {
@@ -993,12 +992,24 @@ textarea:focus {
   padding-top: var(--header-height);
 }
 
+.practice-detail-page {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--wine-strong);
+}
+
+.practice-detail-placeholder {
+  flex: 1 0 auto;
+  background: var(--paper);
+}
+
 .inner-page-hero {
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   background:
-    radial-gradient(circle at 82% 22%, rgba(245, 230, 227, 0.9), transparent 25%),
+    radial-gradient(circle at 82% 22%, rgba(246, 240, 230, 0.94), transparent 25%),
     linear-gradient(135deg, var(--paper), var(--ivory));
   padding: clamp(76px, 9vw, 124px) 0;
 }
@@ -1009,7 +1020,7 @@ textarea:focus {
   bottom: -170px;
   width: 390px;
   height: 390px;
-  border: 1px solid rgba(212, 185, 180, 0.48);
+  border: 1px solid rgba(233, 221, 200, 0.68);
   border-radius: 50%;
   content: "";
 }
@@ -1024,6 +1035,10 @@ textarea:focus {
   font-size: clamp(3rem, 5.6vw, 5.6rem);
   line-height: 0.98;
   margin-bottom: 24px;
+}
+
+.practice-page-hero h1 {
+  margin-bottom: 32px;
 }
 
 .inner-page-hero-content > p:last-child {
@@ -1074,7 +1089,7 @@ textarea:focus {
 
 .about-history-copy p,
 .about-text-block p {
-  color: #5f6871;
+  color: var(--muted);
   font-family: var(--font-sans);
   font-size: 1.03rem;
   font-weight: 400;
@@ -1144,12 +1159,12 @@ textarea:focus {
   gap: 9px;
   flex: 0 0 auto;
   overflow: hidden;
-  border: 1px solid rgba(212, 185, 180, 0.68);
+  border: 1px solid rgba(233, 221, 200, 0.82);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 34% 28%, rgba(245, 230, 227, 0.96), transparent 31%),
+    radial-gradient(circle at 34% 28%, rgba(246, 240, 230, 0.98), transparent 31%),
     linear-gradient(145deg, var(--paper), var(--warm));
-  box-shadow: 0 14px 34px rgba(36, 41, 46, 0.08);
+  box-shadow: 0 14px 34px rgba(40, 56, 47, 0.09);
   color: var(--wine-soft);
   text-align: center;
 }
@@ -1202,6 +1217,10 @@ textarea:focus {
   background: var(--paper);
 }
 
+.about-differentials-section .differentials-grid {
+  padding-top: 8px;
+}
+
 .site-footer p,
 .site-footer a {
   color: rgba(255, 255, 255, 0.76);
@@ -1240,7 +1259,7 @@ textarea:focus {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(245, 230, 227, 0.18);
+  border-top: 1px solid rgba(233, 221, 200, 0.2);
   color: rgba(255, 255, 255, 0.62);
   margin-top: 30px;
   padding: 14px 20px;
@@ -1286,7 +1305,9 @@ textarea:focus {
   }
 
   .brand-logo {
-    width: 188px;
+    width: 228px;
+    margin-right: -18px;
+    margin-left: -23px;
   }
 
   .nav-shell,
@@ -1430,13 +1451,15 @@ textarea:focus {
     font-size: 0.62rem;
   }
 
-  .brand-mark {
-    width: 42px;
-    height: 42px;
+  .footer-symbol {
+    width: 46px;
+    height: 46px;
   }
 
   .brand-logo {
-    width: 176px;
+    width: 214px;
+    margin-right: -17px;
+    margin-left: -21px;
   }
 
   .section,

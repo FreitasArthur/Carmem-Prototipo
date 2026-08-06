@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   firmName,
@@ -11,10 +12,15 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="section-inner footer-grid">
         <div>
-          <Link className="footer-brand" href="/">
-            <span className="brand-mark" aria-hidden="true">
-              CT
-            </span>
+          <Link className="footer-brand" href="/#inicio">
+            <Image
+              className="footer-symbol"
+              src="/logo-carmem-testoni-icone-redondo-transparente.png"
+              width={52}
+              height={52}
+              alt=""
+              aria-hidden="true"
+            />
             <span>{firmName}</span>
           </Link>
           <p>

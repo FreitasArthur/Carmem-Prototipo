@@ -46,8 +46,9 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/logo-carmem-testoni-icone-redondo-transparente.png",
+    shortcut: "/logo-carmem-testoni-icone-redondo-transparente.png",
+    apple: "/logo-carmem-testoni-icone-redondo-transparente.png",
   },
 };
 
@@ -57,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" data-scroll-behavior="smooth">
       <body>{children}</body>
     </html>
   );

@@ -57,7 +57,7 @@ export default function PracticeAreasPage() {
       <SiteHeader />
 
       <main id="conteudo" className="inner-page-main">
-        <section className="inner-page-hero">
+        <section className="inner-page-hero practice-page-hero">
           <div className="section-inner inner-page-hero-content">
             <p className="eyebrow">Áreas de atuação</p>
             <h1>Assessoria jurídica estratégica e personalizada</h1>
