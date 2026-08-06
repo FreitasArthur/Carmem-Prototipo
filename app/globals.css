@@ -541,18 +541,25 @@ a.social-link:focus-visible {
 }
 
 .practice-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 18px;
+  justify-content: center;
 }
 
 .practice-card {
+  flex: 1 1 calc((100% - 36px) / 3);
+  max-width: calc((100% - 36px) / 3);
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.88);
-  padding: 28px;
+  padding: 34px 30px;
   box-shadow: 0 12px 30px rgba(36, 41, 46, 0.06);
+  text-align: center;
   transition:
     border-color 180ms ease,
     transform 180ms ease,
@@ -573,7 +580,7 @@ a.social-link:focus-visible {
   border: 1px solid rgba(212, 185, 180, 0.58);
   border-radius: 6px;
   color: var(--wine);
-  margin-bottom: 22px;
+  margin: 0 auto 22px;
 }
 
 .card-icon svg {
@@ -595,10 +602,12 @@ a.social-link:focus-visible {
 }
 
 .practice-card p {
+  max-width: 420px;
   font-size: 0.96rem;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.practice-card ul,
 .gold-list {
   display: grid;
   gap: 10px;
@@ -607,20 +616,46 @@ a.social-link:focus-visible {
   padding: 0;
 }
 
-.practice-card li {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  color: var(--graphite);
-  font-size: 0.92rem;
+.practice-card-link {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  color: var(--wine-strong);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-top: auto;
+  padding-top: 18px;
+  padding-bottom: 4px;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 }
 
-.practice-card li svg {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 auto;
-  color: var(--champagne);
-  margin-top: 5px;
+.practice-card-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--champagne);
+  content: "";
+  transform-origin: left;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.practice-card-link:hover,
+.practice-card-link:focus-visible {
+  color: var(--wine-soft);
+  transform: translateY(-1px);
+}
+
+.practice-card-link:hover::after,
+.practice-card-link:focus-visible::after {
+  background: var(--wine-soft);
+  transform: scaleX(1.08);
 }
 
 .enterprise-section {
@@ -1235,6 +1270,11 @@ textarea:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .practice-card {
+    flex-basis: calc((100% - 18px) / 2);
+    max-width: calc((100% - 18px) / 2);
+  }
+
   .process-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1432,6 +1472,11 @@ textarea:focus {
   .contact-form,
   .process-step {
     padding: 24px;
+  }
+
+  .practice-card {
+    flex-basis: 100%;
+    max-width: 100%;
   }
 
   .team-heading {

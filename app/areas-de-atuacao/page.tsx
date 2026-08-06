@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   BriefcaseBusiness,
-  Check,
   HeartHandshake,
   Landmark,
   ScrollText,
@@ -23,64 +22,32 @@ const practiceAreas = [
   {
     title: "Planejamento patrimonial e sucessório",
     icon: ShieldCheck,
+    slug: "planejamento-patrimonial-e-sucessorio",
     text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
-    items: [
-      "Planejamento sucessório",
-      "Holdings familiares",
-      "Organização patrimonial",
-      "Testamentos",
-      "Doações",
-      "Estruturação da sucessão familiar",
-    ],
   },
   {
     title: "Empresarial",
     icon: BriefcaseBusiness,
+    slug: "empresarial",
     text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
-    items: [
-      "Contratos empresariais",
-      "Organização societária",
-      "Consultoria preventiva",
-      "Conflitos societários",
-      "Governança familiar e empresarial",
-    ],
   },
   {
     title: "Tributário",
     icon: Landmark,
+    slug: "tributario",
     text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
-    items: [
-      "Consultoria tributária",
-      "Planejamento tributário",
-      "Defesa administrativa",
-      "Contencioso tributário",
-      "Revisão de operações empresariais",
-    ],
   },
   {
     title: "Direito das sucessões",
     icon: ScrollText,
+    slug: "direito-das-sucessoes",
     text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
-    items: [
-      "Inventário judicial",
-      "Inventário extrajudicial",
-      "Partilha de bens",
-      "Testamentos",
-      "Orientação a herdeiros",
-    ],
   },
   {
     title: "Direito de família",
     icon: HeartHandshake,
+    slug: "direito-de-familia",
     text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
-    items: [
-      "Divórcio",
-      "União estável",
-      "Guarda",
-      "Pensão alimentícia",
-      "Partilha",
-      "Planejamento matrimonial",
-    ],
   },
 ];
 
@@ -114,14 +81,12 @@ export default function PracticeAreasPage() {
                     </div>
                     <h2>{area.title}</h2>
                     <p>{area.text}</p>
-                    <ul>
-                      {area.items.map((item) => (
-                        <li key={item}>
-                          <Check aria-hidden="true" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    <Link
+                      className="practice-card-link"
+                      href={`/areas-de-atuacao/${area.slug}`}
+                    >
+                      Saiba mais
+                    </Link>
                   </article>
                 );
               })}
