@@ -1,0 +1,11 @@
+# A segunda conta confiavel do escritorio deve ser adicionada antes de
+# habilitar revisao obrigatoria de CODEOWNERS na branch main.
+* @FreitasArthur
+
+# Arquivos que controlam contato, publicacao e seguranca.
+/app/site-data.ts @FreitasArthur
+/next.config.ts @FreitasArthur
+/netlify.toml @FreitasArthur
+/.github/ @FreitasArthur
+/scripts/verify-whatsapp.mjs @FreitasArthur
+/scripts/monitor-live-site.mjs @FreitasArthur
