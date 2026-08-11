@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import {
   firmName,
@@ -13,7 +13,7 @@ export function SiteFooter() {
       <div className="section-inner footer-grid">
         <div>
           <Link className="footer-brand" href="/#inicio">
-            <Image
+            <img
               className="footer-symbol"
               src="/logo-carmem-testoni-icone-redondo-transparente.png"
               width={52}
