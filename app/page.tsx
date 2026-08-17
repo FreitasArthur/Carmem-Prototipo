@@ -3,16 +3,22 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   ArrowRight,
-  AtSign,
-  Building2,
+  BriefcaseBusiness,
   CalendarCheck,
+  FileText,
+  HeartHandshake,
+  Landmark,
   Mail,
   MapPin,
   Phone,
+  ScrollText,
+  ShieldCheck,
+  UsersRound,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { InstagramProfile } from "./components/instagram-profile";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import {
@@ -49,6 +55,62 @@ const serviceSteps = [
     step: "04",
     title: "Orientação e estratégia",
     text: "O escritório apresenta as orientações e os próximos passos adequados à situação analisada.",
+  },
+];
+
+const practiceAreas = [
+  {
+    title: "Planejamento patrimonial e sucessório",
+    icon: ShieldCheck,
+    slug: "planejamento-patrimonial-e-sucessorio",
+    text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
+  },
+  {
+    title: "Empresarial",
+    icon: BriefcaseBusiness,
+    slug: "empresarial",
+    text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
+  },
+  {
+    title: "Tributário",
+    icon: Landmark,
+    slug: "tributario",
+    text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
+  },
+  {
+    title: "Direito das sucessões",
+    icon: ScrollText,
+    slug: "direito-das-sucessoes",
+    text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
+  },
+  {
+    title: "Direito de família",
+    icon: HeartHandshake,
+    slug: "direito-de-familia",
+    text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
+  },
+];
+
+const differentiators = [
+  {
+    title: "Análise individualizada",
+    icon: FileText,
+    text: "Cada situação é avaliada de acordo com suas particularidades, objetivos e possíveis impactos jurídicos.",
+  },
+  {
+    title: "Atuação preventiva",
+    icon: ShieldCheck,
+    text: "O trabalho preventivo permite identificar riscos e estruturar decisões com maior segurança.",
+  },
+  {
+    title: "Visão integrada",
+    icon: UsersRound,
+    text: "As questões familiares, patrimoniais, empresariais e tributárias são analisadas de forma conjunta quando necessário.",
+  },
+  {
+    title: "Atendimento presencial e on-line",
+    icon: CalendarCheck,
+    text: "O escritório realiza atendimentos presenciais em Joinville e também oferece atendimento por meios digitais.",
   },
 ];
 
@@ -196,7 +258,7 @@ export default function Home() {
                 particularidades de cada cliente.
               </p>
               <div className="hero-actions" aria-label="Ações principais">
-                <Link className="button button-primary" href="/areas-de-atuacao">
+                <Link className="button button-primary" href="/#areas-de-atuacao">
                   Conheça nossa atuação
                   <ArrowRight aria-hidden="true" />
                 </Link>
@@ -209,9 +271,6 @@ export default function Home() {
                   Entrar em contato
                 </a>
               </div>
-              <p className="hero-note">
-                Atendimento presencial em Joinville e atendimento on-line.
-              </p>
             </div>
 
           </div>
@@ -264,6 +323,69 @@ export default function Home() {
           </div>
         </section>
 
+        <section
+          className="section practice-section home-practice-section"
+          id="areas-de-atuacao"
+        >
+          <div className="section-inner">
+            <div className="section-heading" data-reveal>
+              <p className="eyebrow">Áreas de atuação</p>
+              <h2>Assessoria jurídica estratégica e personalizada</h2>
+              <p>
+                Atuação preventiva, consultiva e contenciosa para famílias,
+                patrimônios e empresas, de acordo com as necessidades de cada
+                cliente.
+              </p>
+            </div>
+
+            <div className="practice-grid">
+              {practiceAreas.map((area) => {
+                const Icon = area.icon;
+                return (
+                  <article className="practice-card" key={area.title} data-reveal>
+                    <div className="card-icon">
+                      <Icon aria-hidden="true" />
+                    </div>
+                    <h3>{area.title}</h3>
+                    <p>{area.text}</p>
+                    <Link
+                      className="practice-card-link"
+                      href={`/areas-de-atuacao/${area.slug}`}
+                    >
+                      Saiba mais
+                    </Link>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="section about-differentials-section home-differentials-section"
+          id="diferenciais"
+        >
+          <div className="section-inner">
+            <div className="section-heading" data-reveal>
+              <p className="eyebrow">Diferenciais</p>
+              <h2>Uma atuação próxima, técnica e personalizada</h2>
+            </div>
+
+            <div className="differentials-grid">
+              {differentiators.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article className="differential-item" key={item.title} data-reveal>
+                    <Icon aria-hidden="true" />
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         <section className="section contact-section" id="contato">
           <div className="section-inner contact-heading" data-reveal>
             <p className="eyebrow">Contato</p>
@@ -281,7 +403,7 @@ export default function Home() {
                 <p>
                   <Phone aria-hidden="true" />
                   <span>
-                    <strong>Telefone e WhatsApp</strong>
+                    <strong>WhatsApp</strong>
                     {officePhone}
                   </span>
                 </p>
@@ -292,27 +414,7 @@ export default function Home() {
                     {officeAddress}
                   </span>
                 </p>
-                <p>
-                  <Building2 aria-hidden="true" />
-                  <span>
-                    <strong>Cidade</strong>
-                    Joinville - Santa Catarina
-                  </span>
-                </p>
-                <p>
-                  <CalendarCheck aria-hidden="true" />
-                  <span>
-                    <strong>Horário</strong>
-                    [CONFIRMAR HORÁRIO DE ATENDIMENTO]
-                  </span>
-                </p>
-                <p>
-                  <AtSign aria-hidden="true" />
-                  <span>
-                    <strong>Instagram</strong>
-                    [INSERIR LINK OFICIAL]
-                  </span>
-                </p>
+
                 <p>
                   <Mail aria-hidden="true" />
                   <span>
@@ -435,6 +537,8 @@ export default function Home() {
             </form>
           </div>
         </section>
+
+        <InstagramProfile />
       </main>
 
       <SiteFooter />

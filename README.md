@@ -36,6 +36,23 @@ O arquivo `netlify.toml` já contém a configuração de build, cache e headers 
 segurança. A publicação e o monitor externo devem ser ativados somente quando o
 domínio definitivo estiver disponível; consulte `SECURITY.md`.
 
+## Feed do Instagram
+
+A seção abaixo de Contato consome um feed JSON autorizado e exibe a bio, a foto
+do perfil e as quatro publicações mais recentes de `@advocaciacarmemtestoni`.
+Para ativar a atualização automática:
+
+1. Crie uma conta no Behold e conecte a conta profissional do Instagram com a
+   autorização da proprietária.
+2. Crie um feed do tipo JSON, limite-o a quatro posts e copie a URL pública no
+   formato `https://feeds.behold.so/SEU_FEED_ID`.
+3. Defina `NEXT_PUBLIC_INSTAGRAM_FEED_URL` antes de executar o build. O arquivo
+   `.env.example` documenta o nome da variável sem armazenar credenciais.
+
+A URL do feed não contém a senha nem o token do Instagram. O serviço mantém a
+autorização e a atualização das publicações; o site busca os dados novamente em
+cada visita.
+
 ## Observações para publicação
 
 - Substituir as fotografias temporárias por imagens oficiais, quando disponíveis.

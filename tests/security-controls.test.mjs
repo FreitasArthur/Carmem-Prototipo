@@ -45,6 +45,8 @@ test("keeps the required Netlify security headers enabled", async () => {
     "X-Frame-Options",
     "Referrer-Policy",
     "Permissions-Policy",
+    "https://feeds.behold.so",
+    "https://*.behold.pictures",
   ];
 
   for (const directive of requiredDirectives) {

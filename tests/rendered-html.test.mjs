@@ -99,11 +99,16 @@ test("keeps header navigation destinations predictable", async () => {
   assert.match(header, /href="\/"/);
   assert.match(header, /href: "\/#escritorio"/);
   assert.match(header, /href: "\/#contato"/);
+  assert.doesNotMatch(header, /href: "\/areas-de-atuacao"/);
+  assert.doesNotMatch(header, /href: "\/sobre"/);
   assert.match(header, /target\.scrollIntoView/);
   assert.match(header, /window\.scrollTo/);
   assert.match(page, /id="inicio"/);
   assert.match(page, /id="escritorio"/);
+  assert.match(page, /id="areas-de-atuacao"/);
+  assert.match(page, /id="diferenciais"/);
   assert.match(page, /id="contato"/);
+  assert.match(page, /<InstagramProfile \/>/);
 });
 
 test("uses the official symbol in the footer and browser metadata", async () => {

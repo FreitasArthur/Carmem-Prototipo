@@ -9,8 +9,6 @@ import { whatsappUrl } from "../site-data";
 
 const navigation = [
   { label: "Escritório", href: "/#escritorio" },
-  { label: "Áreas de atuação", href: "/areas-de-atuacao" },
-  { label: "Sobre", href: "/sobre" },
   { label: "Contato", href: "/#contato" },
 ];
 
@@ -140,26 +138,15 @@ export function SiteHeader() {
             className={`nav-links ${isMenuOpen ? "is-open" : ""}`}
             id="menu-principal"
           >
-            {navigation.map((item) => {
-              const isActive =
-                item.href.startsWith("/areas") && pathname === "/areas-de-atuacao"
-                  ? true
-                  : item.href === "/sobre" && pathname === "/sobre";
-
-              return (
-                <Link
-                  className={isActive ? "is-active" : undefined}
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive ? "page" : undefined}
-                  onClick={(event) =>
-                    handleInternalNavigation(event, item.href)
-                  }
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={(event) => handleInternalNavigation(event, item.href)}
+              >
+                {item.label}
+              </Link>
+            ))}
 
             <div className="nav-socials" aria-label="Redes sociais">
               <a

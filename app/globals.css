@@ -558,6 +558,12 @@ a.social-link:focus-visible {
     var(--ivory);
 }
 
+.home-practice-section .section-heading,
+.home-differentials-section .section-heading {
+  max-width: 920px;
+  margin-bottom: 46px;
+}
+
 .practice-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1006,6 +1012,196 @@ textarea:focus {
 
 .form-feedback.is-success {
   color: #37613c;
+}
+
+.instagram-section {
+  background: var(--paper);
+  padding: 52px 0 96px;
+}
+
+.instagram-shell {
+  border-top: 1px solid var(--line);
+  padding-top: 48px;
+}
+
+.instagram-profile-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.instagram-avatar-link {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+.instagram-avatar {
+  width: 96px;
+  height: 96px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ivory);
+  object-fit: cover;
+}
+
+.instagram-profile-copy {
+  min-width: 0;
+}
+
+.instagram-profile-copy .eyebrow {
+  margin-bottom: 4px;
+}
+
+.instagram-profile-copy h2 {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.instagram-handle {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.instagram-handle:hover,
+.instagram-handle:focus-visible {
+  color: var(--wine);
+}
+
+.instagram-biography {
+  max-width: 720px;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.instagram-follow-button {
+  min-width: 132px;
+  background: var(--wine);
+  color: var(--paper);
+}
+
+.instagram-follow-button:hover,
+.instagram-follow-button:focus-visible {
+  background: var(--wine-soft);
+}
+
+.instagram-follow-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+.instagram-feed-message {
+  border-left: 3px solid var(--champagne);
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: -12px 0 24px;
+  padding: 4px 0 4px 12px;
+}
+
+.instagram-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.instagram-post,
+.instagram-post-placeholder {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--warm);
+}
+
+.instagram-post {
+  display: block;
+}
+
+.instagram-post img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.instagram-post:hover img,
+.instagram-post:focus-visible img {
+  transform: scale(1.035);
+}
+
+.instagram-post-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(40, 56, 47, 0.78);
+  color: var(--paper);
+  font-size: 0.86rem;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.instagram-post:hover .instagram-post-overlay,
+.instagram-post:focus-visible .instagram-post-overlay {
+  opacity: 1;
+}
+
+.instagram-post-overlay svg {
+  width: 20px;
+  height: 20px;
+}
+
+.instagram-post-type {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.62));
+}
+
+.instagram-post-type:empty {
+  display: none;
+}
+
+.instagram-post-type svg {
+  width: 21px;
+  height: 21px;
+  fill: rgba(40, 56, 47, 0.22);
+}
+
+.instagram-post-placeholder::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.72) 48%,
+    transparent 66%
+  );
+  content: "";
+  transform: translateX(-100%);
+  animation: instagram-placeholder 1.4s ease-in-out infinite;
+}
+
+@keyframes instagram-placeholder {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 .site-footer {
@@ -1462,6 +1658,15 @@ textarea:focus {
     flex-direction: column;
     text-align: left;
   }
+
+  .instagram-profile-header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .instagram-follow-button {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1528,6 +1733,39 @@ textarea:focus {
   .process-grid,
   .two-columns {
     grid-template-columns: 1fr;
+  }
+
+  .instagram-section {
+    padding: 40px 0 72px;
+  }
+
+  .instagram-shell {
+    padding-top: 40px;
+  }
+
+  .instagram-profile-header {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .instagram-avatar-link,
+  .instagram-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .instagram-profile-copy h2 {
+    font-size: 1.2rem;
+  }
+
+  .instagram-follow-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .instagram-post-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .practice-card,
