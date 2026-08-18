@@ -3,7 +3,7 @@
 ## Contato oficial protegido
 
 O único número autorizado para os links de WhatsApp deste projeto é
-`5547997711897`. O build e a automação de CI falham se outro número aparecer
+`5547997342205`. O build e a automação de CI falham se outro número aparecer
 na configuração ou na exportação final.
 
 ## Relato responsável

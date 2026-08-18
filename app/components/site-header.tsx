@@ -5,7 +5,11 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type MouseEvent, useState } from "react";
-import { whatsappUrl } from "../site-data";
+import {
+  instagramProfileUrl,
+  linkedinProfileUrl,
+  whatsappUrl,
+} from "../site-data";
 
 const navigation = [
   { label: "Escritório", href: "/#escritorio" },
@@ -37,6 +41,17 @@ function InstagramIcon() {
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function LinkedinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M5.34 3.5A1.84 1.84 0 1 1 5.33 7.18 1.84 1.84 0 0 1 5.34 3.5ZM3.75 8.55h3.18V20.5H3.75V8.55Zm5.13 0h3.05v1.63h.04c.43-.8 1.46-1.96 3.01-1.96 3.22 0 3.82 2.12 3.82 4.88v7.4h-3.18v-6.56c0-1.56-.03-3.58-2.18-3.58-2.18 0-2.52 1.71-2.52 3.47v6.67H8.88V8.55Z"
+      />
     </svg>
   );
 }
@@ -160,14 +175,28 @@ export function SiteHeader() {
               >
                 <WhatsappIcon />
               </a>
-              <span
-                className="social-link social-link-placeholder"
-                role="img"
-                aria-label="Instagram (em breve)"
-                title="Instagram (em breve)"
+              <a
+                className="social-link"
+                href={instagramProfileUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Acessar o Instagram da Carmem Testoni"
+                title="Instagram"
+                onClick={closeMenu}
               >
                 <InstagramIcon />
-              </span>
+              </a>
+              <a
+                className="social-link"
+                href={linkedinProfileUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Acessar o LinkedIn da Carmem Testoni"
+                title="LinkedIn"
+                onClick={closeMenu}
+              >
+                <LinkedinIcon />
+              </a>
             </div>
           </div>
         </nav>

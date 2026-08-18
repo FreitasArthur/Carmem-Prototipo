@@ -1,7 +1,7 @@
 export const firmName = "Escritório de Advocacia | Carmem Testoni";
-export const officePhone = "(47) 99771-1897";
-export const officeWhatsapp = "5547997711897";
-export const officeEmail = "carmen@carmemtestoni.com.br";
+export const officePhone = "+55 47 99734-2205";
+export const officeWhatsapp = "5547997342205";
+export const officeEmail = "contato@carmemtestoni.com.br";
 export const officeAddress =
   "Rua Jaraguá, 540 - América, Joinville - SC, 89204-650";
 export const whatsappMessage =
@@ -13,6 +13,8 @@ export const whatsappUrl = `https://wa.me/${officeWhatsapp}?text=${encodeURIComp
 export const instagramUsername = "advocaciacarmemtestoni";
 export const instagramProfileUrl =
   "https://www.instagram.com/advocaciacarmemtestoni/";
+export const linkedinProfileUrl =
+  "https://www.linkedin.com/in/carmem-testoni-advogados-associados-034555419/";
 export const instagramFallbackBio =
   "Holding Familiar | Planejamento Tributário\nAjudamos famílias e empresários a protegerem o que construíram.";
 export const instagramFeedUrl =

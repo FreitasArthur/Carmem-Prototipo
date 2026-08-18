@@ -31,7 +31,7 @@ import {
 } from "./site-data";
 
 const temporaryImages = {
-  hero: "/hero-office.webp",
+  hero: "/hero-office-green.webp",
   about: "/about-office.webp",
 };
 
@@ -257,18 +257,15 @@ export default function Home() {
                 empresas, conduzidas com estratégia, segurança e atenção às
                 particularidades de cada cliente.
               </p>
-              <div className="hero-actions" aria-label="Ações principais">
-                <Link className="button button-primary" href="/#areas-de-atuacao">
-                  Conheça nossa atuação
-                  <ArrowRight aria-hidden="true" />
-                </Link>
+              <div className="hero-actions" aria-label="Ação principal">
                 <a
-                  className="button button-primary"
+                  className="button hero-contact-button"
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
                   Entrar em contato
+                  <ArrowRight aria-hidden="true" />
                 </a>
               </div>
             </div>

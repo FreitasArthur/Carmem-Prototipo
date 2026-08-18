@@ -77,9 +77,10 @@ test("keeps the site independent from former starter runtimes", async () => {
 });
 
 test("preserves the main landing page content and contact flow", async () => {
-  const [page, layout] = await Promise.all([
+  const [page, layout, siteData] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(layout, /Carmem Testoni \| Advogados Associados em Joinville/);
@@ -87,13 +88,20 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(page, /https:\/\/wa\.me\/\$\{officeWhatsapp\}/);
   assert.match(page, /Planejamento patrimonial e sucessório/);
   assert.match(page, /Direito empresarial/);
+  assert.doesNotMatch(page, /Conheça nossa atuação/);
+  assert.match(page, /className="button hero-contact-button"/);
+  assert.match(page, /Entrar em contato/);
   assert.match(page, /Enviar mensagem/);
+  assert.match(siteData, /officePhone = "\+55 47 99734-2205"/);
+  assert.match(siteData, /officeWhatsapp = "5547997342205"/);
+  assert.match(siteData, /officeEmail = "contato@carmemtestoni\.com\.br"/);
 });
 
 test("keeps header navigation destinations predictable", async () => {
-  const [header, page] = await Promise.all([
+  const [header, page, siteData] = await Promise.all([
     readFile(new URL("../app/components/site-header.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(header, /href="\/"/);
@@ -103,6 +111,13 @@ test("keeps header navigation destinations predictable", async () => {
   assert.doesNotMatch(header, /href: "\/sobre"/);
   assert.match(header, /target\.scrollIntoView/);
   assert.match(header, /window\.scrollTo/);
+  assert.match(header, /href=\{instagramProfileUrl\}/);
+  assert.match(header, /href=\{linkedinProfileUrl\}/);
+  assert.match(siteData, /https:\/\/www\.instagram\.com\/advocaciacarmemtestoni\//);
+  assert.match(
+    siteData,
+    /https:\/\/www\.linkedin\.com\/in\/carmem-testoni-advogados-associados-034555419\//,
+  );
   assert.match(page, /id="inicio"/);
   assert.match(page, /id="escritorio"/);
   assert.match(page, /id="areas-de-atuacao"/);
