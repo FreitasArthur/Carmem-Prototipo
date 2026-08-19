@@ -32,7 +32,7 @@ import {
 
 const temporaryImages = {
   hero: "/hero-office-green.webp",
-  about: "/about-office.webp",
+  about: "/office-of.jpeg",
 };
 
 const serviceSteps = [
@@ -294,7 +294,9 @@ export default function Home() {
             <div className="image-feature" data-reveal>
               <img
                 src={temporaryImages.about}
-                alt="Imagem temporária de ambiente corporativo com mesas de trabalho e luz natural"
+                alt="Recepção oficial do escritório Carmem Testoni Advogados Associados"
+                width="1280"
+                height="881"
                 loading="lazy"
               />
             </div>

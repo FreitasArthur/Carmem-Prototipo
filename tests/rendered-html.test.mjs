@@ -97,6 +97,35 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(siteData, /officeEmail = "contato@carmemtestoni\.com\.br"/);
 });
 
+test("keeps the official office photo proportional on responsive layouts", async () => {
+  const [page, styles, officePhoto] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../public/office-of.jpeg", import.meta.url)),
+  ]);
+
+  assert.match(page, /about: "\/office-of\.jpeg"/);
+  assert.match(page, /width="1280"/);
+  assert.match(page, /height="881"/);
+  assert.match(page, /Recep\u00e7\u00e3o oficial do escrit\u00f3rio Carmem Testoni/);
+  assert.match(
+    styles,
+    /\.image-feature\s*\{[^}]*max-width:\s*560px;[^}]*aspect-ratio:\s*1280\s*\/\s*881;[^}]*align-self:\s*center;/s,
+  );
+  assert.match(
+    styles,
+    /\.image-feature img,[^{]*\{[^}]*width:\s*100%;[^}]*height:\s*auto;[^}]*object-fit:\s*contain;/s,
+  );
+  assert.deepEqual([...officePhoto.subarray(0, 3)], [0xff, 0xd8, 0xff]);
+
+  const representativeViewportWidths = [320, 390, 768, 1024, 1366, 1920, 3840];
+  for (const viewportWidth of representativeViewportWidths) {
+    const renderedWidth = Math.min(viewportWidth, 560);
+    const renderedHeight = renderedWidth * (881 / 1280);
+    assert.ok(Math.abs((renderedWidth / renderedHeight) - (1280 / 881)) < 1e-12);
+  }
+});
+
 test("keeps header navigation destinations predictable", async () => {
   const [header, page, siteData] = await Promise.all([
     readFile(new URL("../app/components/site-header.tsx", import.meta.url), "utf8"),
