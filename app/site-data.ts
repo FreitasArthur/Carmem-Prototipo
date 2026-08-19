@@ -17,5 +17,7 @@ export const linkedinProfileUrl =
   "https://www.linkedin.com/in/carmem-testoni-advogados-associados-034555419/";
 export const instagramFallbackBio =
   "Holding Familiar | Planejamento Tributário\nAjudamos famílias e empresários a protegerem o que construíram.";
+const defaultInstagramFeedUrl =
+  "https://feeds.behold.so/syriXUuQgTy4cXFuBtIu";
 export const instagramFeedUrl =
-  process.env.NEXT_PUBLIC_INSTAGRAM_FEED_URL?.trim() ?? "";
+  process.env.NEXT_PUBLIC_INSTAGRAM_FEED_URL?.trim() || defaultInstagramFeedUrl;
