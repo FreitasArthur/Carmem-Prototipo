@@ -21,6 +21,7 @@ import { useState } from "react";
 import { InstagramProfile } from "./components/instagram-profile";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
+import { WhatsappIcon } from "./components/whatsapp-icon";
 import {
   firmName,
   officeAddress,
@@ -271,11 +272,23 @@ export default function Home() {
             </div>
 
             <div className="process-grid">
-              {serviceSteps.map((step) => (
+              {serviceSteps.map((step, index) => (
                 <article className="process-step" key={step.step}>
                   <span>{step.step}</span>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
+                  {index === 0 ? (
+                    <a
+                      className="social-link process-whatsapp-link"
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Iniciar contato pelo WhatsApp"
+                      title="Iniciar contato pelo WhatsApp"
+                    >
+                      <WhatsappIcon />
+                    </a>
+                  ) : null}
                 </article>
               ))}
             </div>

@@ -809,6 +809,8 @@ a.social-link:focus-visible {
 
 .process-step {
   position: relative;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--ivory);
@@ -823,6 +825,28 @@ a.social-link:focus-visible {
   font-weight: 700;
   line-height: 1;
   margin-bottom: 20px;
+}
+
+.process-whatsapp-link {
+  width: 46px;
+  height: 46px;
+  margin-top: auto;
+  border-color: var(--champagne);
+  background: var(--champagne-light);
+  color: var(--wine-strong);
+  box-shadow: 0 8px 22px rgba(40, 56, 47, 0.1);
+}
+
+.process-whatsapp-link svg {
+  width: 21px;
+  height: 21px;
+}
+
+a.process-whatsapp-link:hover,
+a.process-whatsapp-link:focus-visible {
+  border-color: var(--wine-soft);
+  background: var(--wine-strong);
+  color: var(--paper);
 }
 
 .founder-section {
@@ -923,7 +947,7 @@ a.social-link:focus-visible {
 }
 
 .contact-grid {
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact-details,

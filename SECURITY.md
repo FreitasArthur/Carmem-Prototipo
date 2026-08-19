@@ -27,6 +27,7 @@ ou passa a exibir um número de WhatsApp diferente do oficial.
 
 ## Resposta a incidente
 
-Em caso de alteração não autorizada, suspenda a publicação no Netlify, preserve
-os logs, revogue sessões e tokens, restaure um deploy conhecido e verificado,
-e revise acessos do GitHub, Netlify, registrador e DNS antes de republicar.
+Em caso de alteração não autorizada, suspenda a publicação no Cloudflare,
+preserve os logs, revogue sessões e tokens, restaure um deploy conhecido e
+verificado, e revise acessos do GitHub, Cloudflare, registrador e DNS antes de
+republicar.

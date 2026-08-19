@@ -19,10 +19,10 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-O projeto agora roda como uma aplicação Next local comum, sem autenticação
-externa, sem configuração de hosting gerenciado e sem runtime de Worker. Para
-publicar em um domínio depois, configure a variável `NEXT_PUBLIC_SITE_URL` com
-a URL final do site antes do build.
+O projeto roda como uma aplicação Next local comum, sem autenticação externa e
+sem runtime de servidor. A exportação estática é publicada no Cloudflare
+Workers Static Assets. Para publicar em um domínio depois, configure a variável
+`NEXT_PUBLIC_SITE_URL` com a URL final do site antes do build.
 
 O build gera uma exportação estática em `out/`. Para conferir essa versão
 localmente, execute `npm start`. As verificações de segurança disponíveis são:
@@ -32,9 +32,10 @@ npm run security:audit
 npm run verify:whatsapp
 ```
 
-O arquivo `netlify.toml` já contém a configuração de build, cache e headers de
-segurança. A publicação e o monitor externo devem ser ativados somente quando o
-domínio definitivo estiver disponível; consulte `SECURITY.md`.
+O arquivo `public/_headers` configura cache e headers de segurança no
+Cloudflare. O canal para relatos de vulnerabilidade fica em
+`public/.well-known/security.txt`. O monitor externo deve ser configurado para
+o endereço publicado; consulte `SECURITY.md`.
 
 ## Feed do Instagram
 

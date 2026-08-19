@@ -5,7 +5,8 @@
 # Arquivos que controlam contato, publicacao e seguranca.
 /app/site-data.ts @FreitasArthur
 /next.config.ts @FreitasArthur
-/netlify.toml @FreitasArthur
+/public/_headers @FreitasArthur
+/public/.well-known/security.txt @FreitasArthur
 /.github/ @FreitasArthur
 /scripts/verify-whatsapp.mjs @FreitasArthur
 /scripts/monitor-live-site.mjs @FreitasArthur

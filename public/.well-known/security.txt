@@ -1,0 +1,4 @@
+Contact: mailto:contato@carmemtestoni.com.br
+Expires: 2027-08-19T00:00:00Z
+Preferred-Languages: pt-BR
+Canonical: https://carmem-prototipo.arthurschmittsf.workers.dev/.well-known/security.txt

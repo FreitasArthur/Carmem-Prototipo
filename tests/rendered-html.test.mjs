@@ -10,7 +10,6 @@ const forbiddenPlatformTerms = [
   ["chat", "gpt"].join(""),
   ["vin", "ext"].join(""),
   ["wrang", "ler"].join(""),
-  ["cloud", "flare"].join(""),
   ["d1", "database"].join(""),
 ];
 
@@ -90,6 +89,8 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(page, /Direito empresarial/);
   assert.doesNotMatch(page, /Conheça nossa atuação/);
   assert.match(page, /className="button hero-contact-button"/);
+  assert.match(page, /className="social-link process-whatsapp-link"/);
+  assert.match(page, /aria-label="Iniciar contato pelo WhatsApp"/);
   assert.match(page, /Entrar em contato/);
   assert.match(page, /Enviar mensagem/);
   assert.match(siteData, /officePhone = "\+55 47 99734-2205"/);
@@ -124,6 +125,12 @@ test("keeps the official office photo proportional on responsive layouts", async
     const renderedHeight = renderedWidth * (881 / 1280);
     assert.ok(Math.abs((renderedWidth / renderedHeight) - (1280 / 881)) < 1e-12);
   }
+});
+
+test("keeps both contact cards aligned to the same desktop height", async () => {
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.match(styles, /\.contact-grid\s*\{[^}]*align-items:\s*stretch;/s);
 });
 
 test("renders the home content immediately without scroll reveal effects", async () => {
