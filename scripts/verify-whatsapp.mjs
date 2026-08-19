@@ -2,7 +2,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { extname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-export const expectedWhatsappNumber = "5547997711897";
+export const expectedWhatsappNumber = "5547997342205";
 
 const whatsappLinkPattern = /https:\/\/wa\.me\/(\d+)/g;
 const outputTextExtensions = new Set([".html", ".js", ".json", ".txt"]);

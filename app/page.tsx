@@ -3,18 +3,25 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   ArrowRight,
-  AtSign,
-  Building2,
+  BriefcaseBusiness,
   CalendarCheck,
+  FileText,
+  HeartHandshake,
+  Landmark,
   Mail,
   MapPin,
   Phone,
+  ScrollText,
+  ShieldCheck,
+  UsersRound,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { InstagramProfile } from "./components/instagram-profile";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
+import { WhatsappIcon } from "./components/whatsapp-icon";
 import {
   firmName,
   officeAddress,
@@ -25,8 +32,8 @@ import {
 } from "./site-data";
 
 const temporaryImages = {
-  hero: "/hero-office.webp",
-  about: "/about-office.webp",
+  hero: "/hero-office-green.webp",
+  about: "/office-of.jpeg",
 };
 
 const serviceSteps = [
@@ -52,6 +59,62 @@ const serviceSteps = [
   },
 ];
 
+const practiceAreas = [
+  {
+    title: "Planejamento patrimonial e sucessório",
+    icon: ShieldCheck,
+    slug: "planejamento-patrimonial-e-sucessorio",
+    text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
+  },
+  {
+    title: "Empresarial",
+    icon: BriefcaseBusiness,
+    slug: "empresarial",
+    text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
+  },
+  {
+    title: "Tributário",
+    icon: Landmark,
+    slug: "tributario",
+    text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
+  },
+  {
+    title: "Direito das sucessões",
+    icon: ScrollText,
+    slug: "direito-das-sucessoes",
+    text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
+  },
+  {
+    title: "Direito de família",
+    icon: HeartHandshake,
+    slug: "direito-de-familia",
+    text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
+  },
+];
+
+const differentiators = [
+  {
+    title: "Análise individualizada",
+    icon: FileText,
+    text: "Cada situação é avaliada de acordo com suas particularidades, objetivos e possíveis impactos jurídicos.",
+  },
+  {
+    title: "Atuação preventiva",
+    icon: ShieldCheck,
+    text: "O trabalho preventivo permite identificar riscos e estruturar decisões com maior segurança.",
+  },
+  {
+    title: "Visão integrada",
+    icon: UsersRound,
+    text: "As questões familiares, patrimoniais, empresariais e tributárias são analisadas de forma conjunta quando necessário.",
+  },
+  {
+    title: "Atendimento presencial e on-line",
+    icon: CalendarCheck,
+    text: "O escritório realiza atendimentos presenciais em Joinville e também oferece atendimento por meios digitais.",
+  },
+];
+
 const initialForm = {
   name: "",
   phone: "",
@@ -68,46 +131,6 @@ export default function Home() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
-
-  useEffect(() => {
-    document.documentElement.classList.add("reveal-ready");
-
-    const revealElements = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]"),
-    );
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      revealElements.forEach((element) => element.classList.add("is-visible"));
-      return () => document.documentElement.classList.remove("reveal-ready");
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
-    );
-
-    revealElements.forEach((element) => {
-      const rect = element.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) {
-        element.classList.add("is-visible");
-        return;
-      }
-
-      observer.observe(element);
-    });
-
-    return () => {
-      observer.disconnect();
-      document.documentElement.classList.remove("reveal-ready");
-    };
-  }, []);
 
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -187,7 +210,7 @@ export default function Home() {
         >
           <div className="hero-overlay" />
           <div className="section-inner hero-grid">
-            <div className="hero-copy" data-reveal>
+            <div className="hero-copy">
               <p className="eyebrow">Escritório de Advocacia | Carmem Testoni</p>
               <h1>Proteção patrimonial e assessoria jurídica estratégica</h1>
               <p className="hero-lead">
@@ -195,23 +218,17 @@ export default function Home() {
                 empresas, conduzidas com estratégia, segurança e atenção às
                 particularidades de cada cliente.
               </p>
-              <div className="hero-actions" aria-label="Ações principais">
-                <Link className="button button-primary" href="/areas-de-atuacao">
-                  Conheça nossa atuação
-                  <ArrowRight aria-hidden="true" />
-                </Link>
+              <div className="hero-actions" aria-label="Ação principal">
                 <a
-                  className="button button-primary"
+                  className="button hero-contact-button"
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
                   Entrar em contato
+                  <ArrowRight aria-hidden="true" />
                 </a>
               </div>
-              <p className="hero-note">
-                Atendimento presencial em Joinville e atendimento on-line.
-              </p>
             </div>
 
           </div>
@@ -219,7 +236,7 @@ export default function Home() {
 
         <section className="section about-section" id="escritorio">
           <div className="section-inner about-grid">
-            <div className="section-copy" data-reveal>
+            <div className="section-copy">
               <p className="eyebrow">O escritório</p>
               <h2>Assessoria jurídica com visão estratégica</h2>
               <p>
@@ -235,10 +252,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="image-feature" data-reveal>
+            <div className="image-feature">
               <img
                 src={temporaryImages.about}
-                alt="Imagem temporária de ambiente corporativo com mesas de trabalho e luz natural"
+                alt="Recepção oficial do escritório Carmem Testoni Advogados Associados"
+                width="1280"
+                height="881"
                 loading="lazy"
               />
             </div>
@@ -247,25 +266,100 @@ export default function Home() {
 
         <section className="section process-section" id="atendimento">
           <div className="section-inner">
-            <div className="section-heading centered" data-reveal>
+            <div className="section-heading centered">
               <p className="eyebrow">Atendimento</p>
               <h2>Como funciona o atendimento</h2>
             </div>
 
             <div className="process-grid">
-              {serviceSteps.map((step) => (
-                <article className="process-step" key={step.step} data-reveal>
+              {serviceSteps.map((step, index) => (
+                <article className="process-step" key={step.step}>
                   <span>{step.step}</span>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
+                  {index === 0 ? (
+                    <a
+                      className="social-link process-whatsapp-link"
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Iniciar contato pelo WhatsApp"
+                      title="Iniciar contato pelo WhatsApp"
+                    >
+                      <WhatsappIcon />
+                    </a>
+                  ) : null}
                 </article>
               ))}
             </div>
           </div>
         </section>
 
+        <section
+          className="section practice-section home-practice-section"
+          id="areas-de-atuacao"
+        >
+          <div className="section-inner">
+            <div className="section-heading">
+              <p className="eyebrow">Áreas de atuação</p>
+              <h2>Assessoria jurídica estratégica e personalizada</h2>
+              <p>
+                Atuação preventiva, consultiva e contenciosa para famílias,
+                patrimônios e empresas, de acordo com as necessidades de cada
+                cliente.
+              </p>
+            </div>
+
+            <div className="practice-grid">
+              {practiceAreas.map((area) => {
+                const Icon = area.icon;
+                return (
+                  <article className="practice-card" key={area.title}>
+                    <div className="card-icon">
+                      <Icon aria-hidden="true" />
+                    </div>
+                    <h3>{area.title}</h3>
+                    <p>{area.text}</p>
+                    <Link
+                      className="practice-card-link"
+                      href={`/areas-de-atuacao/${area.slug}`}
+                    >
+                      Saiba mais
+                    </Link>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="section about-differentials-section home-differentials-section"
+          id="diferenciais"
+        >
+          <div className="section-inner">
+            <div className="section-heading">
+              <p className="eyebrow">Diferenciais</p>
+              <h2>Uma atuação próxima, técnica e personalizada</h2>
+            </div>
+
+            <div className="differentials-grid">
+              {differentiators.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article className="differential-item" key={item.title}>
+                    <Icon aria-hidden="true" />
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         <section className="section contact-section" id="contato">
-          <div className="section-inner contact-heading" data-reveal>
+          <div className="section-inner contact-heading">
             <p className="eyebrow">Contato</p>
             <h2>Entre em contato</h2>
             <p>
@@ -275,13 +369,13 @@ export default function Home() {
           </div>
 
           <div className="section-inner contact-grid">
-            <div className="contact-details" data-reveal>
+            <div className="contact-details">
               <h3>{firmName}</h3>
               <address>
                 <p>
                   <Phone aria-hidden="true" />
                   <span>
-                    <strong>Telefone e WhatsApp</strong>
+                    <strong>WhatsApp</strong>
                     {officePhone}
                   </span>
                 </p>
@@ -292,27 +386,7 @@ export default function Home() {
                     {officeAddress}
                   </span>
                 </p>
-                <p>
-                  <Building2 aria-hidden="true" />
-                  <span>
-                    <strong>Cidade</strong>
-                    Joinville - Santa Catarina
-                  </span>
-                </p>
-                <p>
-                  <CalendarCheck aria-hidden="true" />
-                  <span>
-                    <strong>Horário</strong>
-                    [CONFIRMAR HORÁRIO DE ATENDIMENTO]
-                  </span>
-                </p>
-                <p>
-                  <AtSign aria-hidden="true" />
-                  <span>
-                    <strong>Instagram</strong>
-                    [INSERIR LINK OFICIAL]
-                  </span>
-                </p>
+
                 <p>
                   <Mail aria-hidden="true" />
                   <span>
@@ -331,7 +405,7 @@ export default function Home() {
               />
             </div>
 
-            <form className="contact-form" onSubmit={handleSubmit} noValidate data-reveal>
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
               <div className="form-row">
                 <label htmlFor="name">Nome</label>
                 <input
@@ -435,6 +509,8 @@ export default function Home() {
             </form>
           </div>
         </section>
+
+        <InstagramProfile />
       </main>
 
       <SiteFooter />

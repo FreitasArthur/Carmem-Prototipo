@@ -3,7 +3,7 @@
 ## Contato oficial protegido
 
 O único número autorizado para os links de WhatsApp deste projeto é
-`5547997711897`. O build e a automação de CI falham se outro número aparecer
+`5547997342205`. O build e a automação de CI falham se outro número aparecer
 na configuração ou na exportação final.
 
 ## Relato responsável
@@ -27,6 +27,7 @@ ou passa a exibir um número de WhatsApp diferente do oficial.
 
 ## Resposta a incidente
 
-Em caso de alteração não autorizada, suspenda a publicação no Netlify, preserve
-os logs, revogue sessões e tokens, restaure um deploy conhecido e verificado,
-e revise acessos do GitHub, Netlify, registrador e DNS antes de republicar.
+Em caso de alteração não autorizada, suspenda a publicação no Cloudflare,
+preserve os logs, revogue sessões e tokens, restaure um deploy conhecido e
+verificado, e revise acessos do GitHub, Cloudflare, registrador e DNS antes de
+republicar.

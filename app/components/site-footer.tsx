@@ -31,11 +31,11 @@ export function SiteFooter() {
         </div>
 
         <div className="footer-contact">
+          <p>OAB/SC 8.862</p>
           <p>{officePhone}</p>
+          <p>Instagram @advocaciacarmemtestoni</p>
           <p>{officeEmail}</p>
           <p>{officeAddress}</p>
-          <p>Instagram: @carmemtestoni</p>
-          <p>OAB/SC 58.578</p>
         </div>
 
       </div>

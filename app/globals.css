@@ -324,18 +324,47 @@ a.social-link:focus-visible {
     calc(var(--header-height) + clamp(24px, 4svh, 46px))
     0
     clamp(28px, 5svh, 48px);
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(25, 36, 30, 0.94),
-      rgba(40, 56, 47, 0.8) 44%,
-      rgba(53, 72, 60, 0.34)
-    ),
-    var(--hero-image);
   background-color: var(--wine-strong);
-  background-position: center, center right;
+}
+
+.hero::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(100%, 145.385svh);
+  content: "";
+  background-image: var(--hero-image);
+  background-position: right center;
   background-repeat: no-repeat;
-  background-size: auto, contain;
+  background-size: contain;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(0, 0, 0, 0.22) 4%,
+    rgba(0, 0, 0, 0.72) 9%,
+    #000 14%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(0, 0, 0, 0.22) 4%,
+    rgba(0, 0, 0, 0.72) 9%,
+    #000 14%
+  );
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(25, 36, 30, 0.94),
+    rgba(40, 56, 47, 0.8) 44%,
+    rgba(53, 72, 60, 0.34)
+  );
+  pointer-events: none;
 }
 
 .hero::after {
@@ -432,6 +461,36 @@ a.social-link:focus-visible {
   background: var(--wine-soft);
 }
 
+.hero-contact-button {
+  min-height: 54px;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: var(--champagne);
+  color: var(--wine-strong);
+  padding: 15px 24px;
+  font-size: 0.98rem;
+  box-shadow:
+    0 14px 34px rgba(14, 25, 19, 0.3),
+    0 0 0 1px rgba(233, 221, 200, 0.18);
+}
+
+.hero-contact-button:hover,
+.hero-contact-button:focus-visible {
+  border-color: var(--paper);
+  background: var(--champagne-light);
+  box-shadow:
+    0 18px 38px rgba(14, 25, 19, 0.36),
+    0 0 0 3px rgba(233, 221, 200, 0.22);
+}
+
+.hero-contact-button svg {
+  transition: transform 180ms ease;
+}
+
+.hero-contact-button:hover svg,
+.hero-contact-button:focus-visible svg {
+  transform: translateX(3px);
+}
+
 .button-champagne {
   background: var(--champagne);
   color: var(--wine-strong);
@@ -472,9 +531,9 @@ a.social-link:focus-visible {
 }
 
 .about-grid {
-  width: min(1040px, calc(100% - 40px));
+  width: min(1160px, calc(100% - 40px));
   display: grid;
-  grid-template-columns: minmax(0, 520px) minmax(0, 460px);
+  grid-template-columns: minmax(0, 520px) minmax(0, 560px);
   justify-content: center;
   align-items: center;
   gap: clamp(48px, 6vw, 72px);
@@ -521,8 +580,10 @@ a.social-link:focus-visible {
 
 .image-feature {
   height: auto;
+  max-width: 560px;
+  aspect-ratio: 1280 / 881;
   justify-self: center;
-  align-self: end;
+  align-self: center;
 }
 
 .enterprise-media {
@@ -556,6 +617,12 @@ a.social-link:focus-visible {
   background:
     linear-gradient(180deg, rgba(250, 251, 249, 0.96), rgba(242, 238, 230, 0.66)),
     var(--ivory);
+}
+
+.home-practice-section .section-heading,
+.home-differentials-section .section-heading {
+  max-width: 920px;
+  margin-bottom: 46px;
 }
 
 .practice-grid {
@@ -742,6 +809,8 @@ a.social-link:focus-visible {
 
 .process-step {
   position: relative;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--ivory);
@@ -756,6 +825,28 @@ a.social-link:focus-visible {
   font-weight: 700;
   line-height: 1;
   margin-bottom: 20px;
+}
+
+.process-whatsapp-link {
+  width: 46px;
+  height: 46px;
+  margin-top: auto;
+  border-color: var(--champagne);
+  background: var(--champagne-light);
+  color: var(--wine-strong);
+  box-shadow: 0 8px 22px rgba(40, 56, 47, 0.1);
+}
+
+.process-whatsapp-link svg {
+  width: 21px;
+  height: 21px;
+}
+
+a.process-whatsapp-link:hover,
+a.process-whatsapp-link:focus-visible {
+  border-color: var(--wine-soft);
+  background: var(--wine-strong);
+  color: var(--paper);
 }
 
 .founder-section {
@@ -856,7 +947,7 @@ a.social-link:focus-visible {
 }
 
 .contact-grid {
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact-details,
@@ -1006,6 +1097,196 @@ textarea:focus {
 
 .form-feedback.is-success {
   color: #37613c;
+}
+
+.instagram-section {
+  background: var(--paper);
+  padding: 52px 0 96px;
+}
+
+.instagram-shell {
+  border-top: 1px solid var(--line);
+  padding-top: 48px;
+}
+
+.instagram-profile-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.instagram-avatar-link {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+.instagram-avatar {
+  width: 96px;
+  height: 96px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ivory);
+  object-fit: cover;
+}
+
+.instagram-profile-copy {
+  min-width: 0;
+}
+
+.instagram-profile-copy .eyebrow {
+  margin-bottom: 4px;
+}
+
+.instagram-profile-copy h2 {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.instagram-handle {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.instagram-handle:hover,
+.instagram-handle:focus-visible {
+  color: var(--wine);
+}
+
+.instagram-biography {
+  max-width: 720px;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.instagram-follow-button {
+  min-width: 132px;
+  background: var(--wine);
+  color: var(--paper);
+}
+
+.instagram-follow-button:hover,
+.instagram-follow-button:focus-visible {
+  background: var(--wine-soft);
+}
+
+.instagram-follow-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+.instagram-feed-message {
+  border-left: 3px solid var(--champagne);
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: -12px 0 24px;
+  padding: 4px 0 4px 12px;
+}
+
+.instagram-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.instagram-post,
+.instagram-post-placeholder {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--warm);
+}
+
+.instagram-post {
+  display: block;
+}
+
+.instagram-post img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.instagram-post:hover img,
+.instagram-post:focus-visible img {
+  transform: scale(1.035);
+}
+
+.instagram-post-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(40, 56, 47, 0.78);
+  color: var(--paper);
+  font-size: 0.86rem;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.instagram-post:hover .instagram-post-overlay,
+.instagram-post:focus-visible .instagram-post-overlay {
+  opacity: 1;
+}
+
+.instagram-post-overlay svg {
+  width: 20px;
+  height: 20px;
+}
+
+.instagram-post-type {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.62));
+}
+
+.instagram-post-type:empty {
+  display: none;
+}
+
+.instagram-post-type svg {
+  width: 21px;
+  height: 21px;
+  fill: rgba(40, 56, 47, 0.22);
+}
+
+.instagram-post-placeholder::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.72) 48%,
+    transparent 66%
+  );
+  content: "";
+  transform: translateX(-100%);
+  animation: instagram-placeholder 1.4s ease-in-out infinite;
+}
+
+@keyframes instagram-placeholder {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 .site-footer {
@@ -1301,19 +1582,6 @@ textarea:focus {
   text-align: center;
 }
 
-.reveal-ready [data-reveal] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 600ms ease,
-    transform 600ms ease;
-}
-
-.reveal-ready [data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 @media (max-width: 1080px) {
   .nav-links {
     gap: 18px;
@@ -1411,7 +1679,28 @@ textarea:focus {
   .hero {
     min-height: auto;
     padding: calc(var(--header-height) + 58px) 0 56px;
-    background-position: center, center bottom;
+  }
+
+  .hero::before {
+    top: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1512 / 1040;
+    background-position: center bottom;
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      transparent 0,
+      rgba(0, 0, 0, 0.28) 12%,
+      rgba(0, 0, 0, 0.76) 24%,
+      #000 36%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0,
+      rgba(0, 0, 0, 0.28) 12%,
+      rgba(0, 0, 0, 0.76) 24%,
+      #000 36%
+    );
   }
 
   .hero-grid,
@@ -1461,6 +1750,15 @@ textarea:focus {
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
+  }
+
+  .instagram-profile-header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .instagram-follow-button {
+    grid-column: 2;
+    justify-self: start;
   }
 }
 
@@ -1528,6 +1826,39 @@ textarea:focus {
   .process-grid,
   .two-columns {
     grid-template-columns: 1fr;
+  }
+
+  .instagram-section {
+    padding: 40px 0 72px;
+  }
+
+  .instagram-shell {
+    padding-top: 40px;
+  }
+
+  .instagram-profile-header {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .instagram-avatar-link,
+  .instagram-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .instagram-profile-copy h2 {
+    font-size: 1.2rem;
+  }
+
+  .instagram-follow-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .instagram-post-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .practice-card,
@@ -1611,9 +1942,4 @@ textarea:focus {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal-ready [data-reveal],
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
 }

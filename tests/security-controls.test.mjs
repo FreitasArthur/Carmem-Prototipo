@@ -32,22 +32,47 @@ test("controlled tampering simulation rejects another WhatsApp number", () => {
   );
 });
 
-test("keeps the required Netlify security headers enabled", async () => {
-  const netlifyConfig = await readFile(
-    new URL("../netlify.toml", import.meta.url),
+test("keeps the required Cloudflare security headers enabled", async () => {
+  const cloudflareHeaders = await readFile(
+    new URL("../public/_headers", import.meta.url),
     "utf8",
   );
   const requiredDirectives = [
-    'publish = "out"',
+    "/*",
+    "/_next/static/*",
     "Content-Security-Policy",
     "Strict-Transport-Security",
     "X-Content-Type-Options",
     "X-Frame-Options",
     "Referrer-Policy",
     "Permissions-Policy",
+    "https://feeds.behold.so",
+    "https://*.behold.pictures",
   ];
 
   for (const directive of requiredDirectives) {
-    assert.ok(netlifyConfig.includes(directive), `${directive} ausente.`);
+    assert.ok(cloudflareHeaders.includes(directive), `${directive} ausente.`);
   }
+});
+
+test("publishes the security contact at the standardized path", async () => {
+  const sourceSecurityTxt = await readFile(
+    new URL("../public/.well-known/security.txt", import.meta.url),
+    "utf8",
+  );
+  const exportedSecurityTxt = await readFile(
+    new URL("../out/.well-known/security.txt", import.meta.url),
+    "utf8",
+  );
+  const exportedHeaders = await readFile(
+    new URL("../out/_headers", import.meta.url),
+    "utf8",
+  );
+
+  for (const field of ["Contact:", "Expires:", "Preferred-Languages:", "Canonical:"]) {
+    assert.ok(sourceSecurityTxt.includes(field), `${field} ausente.`);
+  }
+
+  assert.equal(exportedSecurityTxt, sourceSecurityTxt);
+  assert.ok(exportedHeaders.includes("Content-Security-Policy"));
 });

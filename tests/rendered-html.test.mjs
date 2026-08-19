@@ -10,7 +10,6 @@ const forbiddenPlatformTerms = [
   ["chat", "gpt"].join(""),
   ["vin", "ext"].join(""),
   ["wrang", "ler"].join(""),
-  ["cloud", "flare"].join(""),
   ["d1", "database"].join(""),
 ];
 
@@ -77,9 +76,10 @@ test("keeps the site independent from former starter runtimes", async () => {
 });
 
 test("preserves the main landing page content and contact flow", async () => {
-  const [page, layout] = await Promise.all([
+  const [page, layout, siteData] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(layout, /Carmem Testoni \| Advogados Associados em Joinville/);
@@ -87,23 +87,93 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(page, /https:\/\/wa\.me\/\$\{officeWhatsapp\}/);
   assert.match(page, /Planejamento patrimonial e sucessório/);
   assert.match(page, /Direito empresarial/);
+  assert.doesNotMatch(page, /Conheça nossa atuação/);
+  assert.match(page, /className="button hero-contact-button"/);
+  assert.match(page, /className="social-link process-whatsapp-link"/);
+  assert.match(page, /aria-label="Iniciar contato pelo WhatsApp"/);
+  assert.match(page, /Entrar em contato/);
   assert.match(page, /Enviar mensagem/);
+  assert.match(siteData, /officePhone = "\+55 47 99734-2205"/);
+  assert.match(siteData, /officeWhatsapp = "5547997342205"/);
+  assert.match(siteData, /officeEmail = "contato@carmemtestoni\.com\.br"/);
+});
+
+test("keeps the official office photo proportional on responsive layouts", async () => {
+  const [page, styles, officePhoto] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../public/office-of.jpeg", import.meta.url)),
+  ]);
+
+  assert.match(page, /about: "\/office-of\.jpeg"/);
+  assert.match(page, /width="1280"/);
+  assert.match(page, /height="881"/);
+  assert.match(page, /Recep\u00e7\u00e3o oficial do escrit\u00f3rio Carmem Testoni/);
+  assert.match(
+    styles,
+    /\.image-feature\s*\{[^}]*max-width:\s*560px;[^}]*aspect-ratio:\s*1280\s*\/\s*881;[^}]*align-self:\s*center;/s,
+  );
+  assert.match(
+    styles,
+    /\.image-feature img,[^{]*\{[^}]*width:\s*100%;[^}]*height:\s*auto;[^}]*object-fit:\s*contain;/s,
+  );
+  assert.deepEqual([...officePhoto.subarray(0, 3)], [0xff, 0xd8, 0xff]);
+
+  const representativeViewportWidths = [320, 390, 768, 1024, 1366, 1920, 3840];
+  for (const viewportWidth of representativeViewportWidths) {
+    const renderedWidth = Math.min(viewportWidth, 560);
+    const renderedHeight = renderedWidth * (881 / 1280);
+    assert.ok(Math.abs((renderedWidth / renderedHeight) - (1280 / 881)) < 1e-12);
+  }
+});
+
+test("keeps both contact cards aligned to the same desktop height", async () => {
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.match(styles, /\.contact-grid\s*\{[^}]*align-items:\s*stretch;/s);
+});
+
+test("renders the home content immediately without scroll reveal effects", async () => {
+  const [page, instagramProfile, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/instagram-profile.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+  const revealImplementation = /IntersectionObserver|data-reveal|reveal-ready|is-visible/;
+
+  assert.doesNotMatch(page, revealImplementation);
+  assert.doesNotMatch(instagramProfile, revealImplementation);
+  assert.doesNotMatch(styles, revealImplementation);
+  assert.match(styles, /scroll-behavior:\s*smooth/);
 });
 
 test("keeps header navigation destinations predictable", async () => {
-  const [header, page] = await Promise.all([
+  const [header, page, siteData] = await Promise.all([
     readFile(new URL("../app/components/site-header.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(header, /href="\/"/);
   assert.match(header, /href: "\/#escritorio"/);
   assert.match(header, /href: "\/#contato"/);
+  assert.doesNotMatch(header, /href: "\/areas-de-atuacao"/);
+  assert.doesNotMatch(header, /href: "\/sobre"/);
   assert.match(header, /target\.scrollIntoView/);
   assert.match(header, /window\.scrollTo/);
+  assert.match(header, /href=\{instagramProfileUrl\}/);
+  assert.match(header, /href=\{linkedinProfileUrl\}/);
+  assert.match(siteData, /https:\/\/www\.instagram\.com\/advocaciacarmemtestoni\//);
+  assert.match(
+    siteData,
+    /https:\/\/www\.linkedin\.com\/in\/carmem-testoni-advogados-associados-034555419\//,
+  );
   assert.match(page, /id="inicio"/);
   assert.match(page, /id="escritorio"/);
+  assert.match(page, /id="areas-de-atuacao"/);
+  assert.match(page, /id="diferenciais"/);
   assert.match(page, /id="contato"/);
+  assert.match(page, /<InstagramProfile \/>/);
 });
 
 test("uses the official symbol in the footer and browser metadata", async () => {
