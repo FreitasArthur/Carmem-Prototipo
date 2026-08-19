@@ -169,7 +169,7 @@ export function InstagramProfile() {
       id="instagram"
       aria-labelledby="instagram-title"
     >
-      <div className="section-inner instagram-shell" data-reveal>
+      <div className="section-inner instagram-shell">
         <header className="instagram-profile-header">
           <a
             className="instagram-avatar-link"

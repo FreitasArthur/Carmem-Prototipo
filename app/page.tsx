@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InstagramProfile } from "./components/instagram-profile";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
@@ -131,46 +131,6 @@ export default function Home() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
 
-  useEffect(() => {
-    document.documentElement.classList.add("reveal-ready");
-
-    const revealElements = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]"),
-    );
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      revealElements.forEach((element) => element.classList.add("is-visible"));
-      return () => document.documentElement.classList.remove("reveal-ready");
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
-    );
-
-    revealElements.forEach((element) => {
-      const rect = element.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) {
-        element.classList.add("is-visible");
-        return;
-      }
-
-      observer.observe(element);
-    });
-
-    return () => {
-      observer.disconnect();
-      document.documentElement.classList.remove("reveal-ready");
-    };
-  }, []);
-
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
@@ -249,7 +209,7 @@ export default function Home() {
         >
           <div className="hero-overlay" />
           <div className="section-inner hero-grid">
-            <div className="hero-copy" data-reveal>
+            <div className="hero-copy">
               <p className="eyebrow">Escritório de Advocacia | Carmem Testoni</p>
               <h1>Proteção patrimonial e assessoria jurídica estratégica</h1>
               <p className="hero-lead">
@@ -275,7 +235,7 @@ export default function Home() {
 
         <section className="section about-section" id="escritorio">
           <div className="section-inner about-grid">
-            <div className="section-copy" data-reveal>
+            <div className="section-copy">
               <p className="eyebrow">O escritório</p>
               <h2>Assessoria jurídica com visão estratégica</h2>
               <p>
@@ -291,7 +251,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="image-feature" data-reveal>
+            <div className="image-feature">
               <img
                 src={temporaryImages.about}
                 alt="Recepção oficial do escritório Carmem Testoni Advogados Associados"
@@ -305,14 +265,14 @@ export default function Home() {
 
         <section className="section process-section" id="atendimento">
           <div className="section-inner">
-            <div className="section-heading centered" data-reveal>
+            <div className="section-heading centered">
               <p className="eyebrow">Atendimento</p>
               <h2>Como funciona o atendimento</h2>
             </div>
 
             <div className="process-grid">
               {serviceSteps.map((step) => (
-                <article className="process-step" key={step.step} data-reveal>
+                <article className="process-step" key={step.step}>
                   <span>{step.step}</span>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
@@ -327,7 +287,7 @@ export default function Home() {
           id="areas-de-atuacao"
         >
           <div className="section-inner">
-            <div className="section-heading" data-reveal>
+            <div className="section-heading">
               <p className="eyebrow">Áreas de atuação</p>
               <h2>Assessoria jurídica estratégica e personalizada</h2>
               <p>
@@ -341,7 +301,7 @@ export default function Home() {
               {practiceAreas.map((area) => {
                 const Icon = area.icon;
                 return (
-                  <article className="practice-card" key={area.title} data-reveal>
+                  <article className="practice-card" key={area.title}>
                     <div className="card-icon">
                       <Icon aria-hidden="true" />
                     </div>
@@ -365,7 +325,7 @@ export default function Home() {
           id="diferenciais"
         >
           <div className="section-inner">
-            <div className="section-heading" data-reveal>
+            <div className="section-heading">
               <p className="eyebrow">Diferenciais</p>
               <h2>Uma atuação próxima, técnica e personalizada</h2>
             </div>
@@ -374,7 +334,7 @@ export default function Home() {
               {differentiators.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <article className="differential-item" key={item.title} data-reveal>
+                  <article className="differential-item" key={item.title}>
                     <Icon aria-hidden="true" />
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
@@ -386,7 +346,7 @@ export default function Home() {
         </section>
 
         <section className="section contact-section" id="contato">
-          <div className="section-inner contact-heading" data-reveal>
+          <div className="section-inner contact-heading">
             <p className="eyebrow">Contato</p>
             <h2>Entre em contato</h2>
             <p>
@@ -396,7 +356,7 @@ export default function Home() {
           </div>
 
           <div className="section-inner contact-grid">
-            <div className="contact-details" data-reveal>
+            <div className="contact-details">
               <h3>{firmName}</h3>
               <address>
                 <p>
@@ -432,7 +392,7 @@ export default function Home() {
               />
             </div>
 
-            <form className="contact-form" onSubmit={handleSubmit} noValidate data-reveal>
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
               <div className="form-row">
                 <label htmlFor="name">Nome</label>
                 <input

@@ -1558,19 +1558,6 @@ textarea:focus {
   text-align: center;
 }
 
-.reveal-ready [data-reveal] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 600ms ease,
-    transform 600ms ease;
-}
-
-.reveal-ready [data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 @media (max-width: 1080px) {
   .nav-links {
     gap: 18px;
@@ -1931,9 +1918,4 @@ textarea:focus {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal-ready [data-reveal],
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
 }

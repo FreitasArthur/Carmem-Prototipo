@@ -126,6 +126,20 @@ test("keeps the official office photo proportional on responsive layouts", async
   }
 });
 
+test("renders the home content immediately without scroll reveal effects", async () => {
+  const [page, instagramProfile, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/instagram-profile.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+  const revealImplementation = /IntersectionObserver|data-reveal|reveal-ready|is-visible/;
+
+  assert.doesNotMatch(page, revealImplementation);
+  assert.doesNotMatch(instagramProfile, revealImplementation);
+  assert.doesNotMatch(styles, revealImplementation);
+  assert.match(styles, /scroll-behavior:\s*smooth/);
+});
+
 test("keeps header navigation destinations predictable", async () => {
   const [header, page, siteData] = await Promise.all([
     readFile(new URL("../app/components/site-header.tsx", import.meta.url), "utf8"),
