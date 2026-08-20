@@ -18,6 +18,13 @@ import {
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  contactFields,
+  formatBrazilianPhone,
+  sanitizeName,
+  validateContactField,
+} from "./contact-form-validation.mjs";
+import type { ContactField } from "./contact-form-validation.mjs";
 import { InstagramProfile } from "./components/instagram-profile";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
@@ -126,11 +133,34 @@ const initialForm = {
 
 type FormState = typeof initialForm;
 type FormStatus = "idle" | "error" | "success";
+type FieldErrors = Partial<Record<ContactField, string>>;
 
 export default function Home() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  function updateFieldError(field: ContactField, value: string, onlyIfVisible = false) {
+    setFieldErrors((current) => {
+      if (onlyIfVisible && !(field in current)) return current;
+
+      const next = { ...current };
+      const error = validateContactField(field, value);
+
+      if (error) next[field] = error;
+      else delete next[field];
+
+      return next;
+    });
+  }
+
+  function updateContactField(field: ContactField, value: string) {
+    setForm((current) => ({ ...current, [field]: value }));
+    updateFieldError(field, value, true);
+    setStatus("idle");
+    setFeedback("");
+  }
 
   function handleFieldChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -141,40 +171,61 @@ export default function Home() {
         ? target.checked
         : target.value;
 
+    if (target.name === "name") {
+      updateContactField("name", sanitizeName(String(value)));
+      return;
+    }
+
+    if (target.name === "phone") {
+      updateContactField("phone", formatBrazilianPhone(String(value)));
+      return;
+    }
+
+    if (target.name === "email") {
+      updateContactField("email", String(value));
+      return;
+    }
+
     setForm((current) => ({
       ...current,
       [target.name]: value,
     }));
+    setStatus("idle");
+    setFeedback("");
   }
 
   function validateForm() {
-    const missingFields = [
-      form.name,
-      form.phone,
-      form.email,
-      form.subject,
-      form.message,
-    ].some((value) => value.trim().length === 0);
+    const errors = contactFields.reduce<FieldErrors>((current, field) => {
+      const error = validateContactField(field, form[field]);
+      if (error) current[field] = error;
+      return current;
+    }, {});
+    const subjectMissing = form.subject.trim().length === 0;
+    let generalFeedback = "";
 
-    if (missingFields || !form.privacy) {
-      return "Preencha os campos obrigatórios e confirme o aviso de privacidade.";
+    if (subjectMissing && !form.privacy) {
+      generalFeedback = "Selecione um assunto e confirme o aviso de privacidade.";
+    } else if (subjectMissing) {
+      generalFeedback = "Selecione um assunto para continuar.";
+    } else if (!form.privacy) {
+      generalFeedback = "Confirme o aviso de privacidade para continuar.";
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(form.email)) {
-      return "Informe um e-mail válido para retorno do contato.";
-    }
-
-    return "";
+    return {
+      errors,
+      generalFeedback,
+      hasError: Object.keys(errors).length > 0 || Boolean(generalFeedback),
+    };
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const error = validateForm();
+    const validation = validateForm();
 
-    if (error) {
+    if (validation.hasError) {
+      setFieldErrors(validation.errors);
       setStatus("error");
-      setFeedback(error);
+      setFeedback(validation.generalFeedback);
       return;
     }
 
@@ -406,7 +457,7 @@ export default function Home() {
             </div>
 
             <form className="contact-form" onSubmit={handleSubmit} noValidate>
-              <div className="form-row">
+              <div className="form-row validated-field">
                 <label htmlFor="name">Nome</label>
                 <input
                   id="name"
@@ -415,24 +466,42 @@ export default function Home() {
                   autoComplete="name"
                   value={form.name}
                   onChange={handleFieldChange}
+                  onBlur={() => updateFieldError("name", form.name)}
+                  aria-invalid={Boolean(fieldErrors.name)}
+                  aria-describedby={fieldErrors.name ? "name-error" : undefined}
                   required
                 />
+                {fieldErrors.name ? (
+                  <p className="field-error" id="name-error" role="alert">
+                    {fieldErrors.name}
+                  </p>
+                ) : null}
               </div>
 
               <div className="form-row two-columns">
-                <div>
+                <div className="validated-field">
                   <label htmlFor="phone">Telefone</label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
+                    inputMode="numeric"
                     autoComplete="tel"
                     value={form.phone}
                     onChange={handleFieldChange}
+                    onBlur={() => updateFieldError("phone", form.phone)}
+                    maxLength={15}
+                    aria-invalid={Boolean(fieldErrors.phone)}
+                    aria-describedby={fieldErrors.phone ? "phone-error" : undefined}
                     required
                   />
+                  {fieldErrors.phone ? (
+                    <p className="field-error" id="phone-error" role="alert">
+                      {fieldErrors.phone}
+                    </p>
+                  ) : null}
                 </div>
-                <div>
+                <div className="validated-field">
                   <label htmlFor="email">E-mail</label>
                   <input
                     id="email"
@@ -441,8 +510,17 @@ export default function Home() {
                     autoComplete="email"
                     value={form.email}
                     onChange={handleFieldChange}
+                    onBlur={() => updateFieldError("email", form.email)}
+                    spellCheck={false}
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "email-error" : undefined}
                     required
                   />
+                  {fieldErrors.email ? (
+                    <p className="field-error" id="email-error" role="alert">
+                      {fieldErrors.email}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -475,7 +553,6 @@ export default function Home() {
                   rows={4}
                   value={form.message}
                   onChange={handleFieldChange}
-                  required
                 />
               </div>
 

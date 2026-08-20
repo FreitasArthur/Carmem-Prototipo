@@ -1013,7 +1013,7 @@ address span,
 
 .contact-form {
   display: grid;
-  gap: 16px;
+  gap: 24px;
   background: var(--paper);
 }
 
@@ -1025,7 +1025,13 @@ address span,
 
 .two-columns {
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 24px;
+}
+
+.validated-field {
+  position: relative;
+  align-content: start;
 }
 
 label {
@@ -1052,7 +1058,8 @@ textarea {
 
 textarea {
   min-height: 112px;
-  resize: vertical;
+  overflow-y: auto;
+  resize: none;
 }
 
 input:focus,
@@ -1061,6 +1068,27 @@ textarea:focus {
   border-color: var(--champagne);
   background: var(--paper);
   box-shadow: 0 0 0 4px rgba(233, 221, 200, 0.32);
+}
+
+input[aria-invalid="true"] {
+  border-color: #a43a46;
+}
+
+input[aria-invalid="true"]:focus {
+  border-color: #a43a46;
+  box-shadow: 0 0 0 4px rgba(164, 58, 70, 0.12);
+}
+
+.field-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 4px 0 0;
+  color: #8b1f2f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .privacy-check {
