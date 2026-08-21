@@ -47,7 +47,7 @@ const serviceSteps = [
   {
     step: "01",
     title: "Contato inicial",
-    text: "O cliente apresenta brevemente sua necessidade e solicita o agendamento.",
+    text: "O cliente apresenta sua necessidade e solicita o agendamento do atendimento inicial.",
   },
   {
     step: "02",
@@ -71,31 +71,31 @@ const practiceAreas = [
     title: "Planejamento patrimonial e sucessório",
     icon: ShieldCheck,
     slug: "planejamento-patrimonial-e-sucessorio",
-    text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
+    text: "Estruturação jurídica para organizar, proteger e transmitir o patrimônio em vida, reduzindo conflitos futuros entre herdeiros e otimizando aspectos tributários e sucessórios.",
   },
   {
     title: "Empresarial",
     icon: BriefcaseBusiness,
     slug: "empresarial",
-    text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
+    text: "Assessoria jurídica estratégica para empresas e empresários, com foco na prevenção de riscos e na segurança das relações comerciais.",
   },
   {
     title: "Tributário",
     icon: Landmark,
     slug: "tributario",
-    text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
+    text: "Análise da carga tributária e desenvolvimento de estratégias fiscais compatíveis com a legislação, reduzindo riscos e contingências para pessoas físicas e empresas.",
   },
   {
-    title: "Direito das sucessões",
+    title: "Sucessões",
     icon: ScrollText,
     slug: "direito-das-sucessoes",
-    text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
+    text: "Condução de inventários, partilhas e testamentos, com atenção à sensibilidade do momento e busca por soluções ágeis e seguras para a família.",
   },
   {
-    title: "Direito de família",
+    title: "Trabalhista",
     icon: HeartHandshake,
     slug: "direito-de-familia",
-    text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
+    text: "Orientação preventiva e defesa em questões trabalhistas, ajudando o empresário a reduzir passivos e manter a conformidade nas relações de trabalho.",
   },
 ];
 
@@ -263,11 +263,9 @@ export default function Home() {
           <div className="section-inner hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">Escritório de Advocacia | Carmem Testoni</p>
-              <h1>Proteção patrimonial e assessoria jurídica estratégica</h1>
+              <h1>O que você construiu merece a proteção jurídica certa</h1>
               <p className="hero-lead">
-                Soluções jurídicas personalizadas para famílias, patrimônios e
-                empresas, conduzidas com estratégia, segurança e atenção às
-                particularidades de cada cliente.
+                Soluções personalizadas em patrimônio, empresas e família, com a estratégia e a discrição que cada situação exige.
               </p>
               <div className="hero-actions" aria-label="Ação principal">
                 <a
@@ -289,16 +287,14 @@ export default function Home() {
           <div className="section-inner about-grid">
             <div className="section-copy">
               <p className="eyebrow">O escritório</p>
-              <h2>Assessoria jurídica com visão estratégica</h2>
+              <h2>Mais que assessoria, uma parceria de confiança</h2>
               <p>
-                A Carmem Testoni | Advogados Associados atua na proteção do
-                patrimônio, na organização das relações familiares e sucessórias
-                e na assessoria estratégica de empresas e famílias empresárias.
+                Atuamos na proteção do patrimônio, na organização das relações familiares e sucessórias e no apoio jurídico 
+                estratégico a empresas e famílias empresárias — sempre com a atenção que cada história merece.
               </p>
               <p>
-                Cada situação é analisada individualmente, considerando seus
-                aspectos jurídicos, patrimoniais, tributários, empresariais e
-                familiares. O trabalho é pautado pela ética, transparência,
+                Cada situação é analisada individualmente, considerando seus 
+                aspectos jurídicos, patrimoniais, tributários, empresariais e familiares. O trabalho é pautado pela ética, transparência, 
                 discrição e comunicação clara.
               </p>
             </div>
@@ -355,9 +351,9 @@ export default function Home() {
               <p className="eyebrow">Áreas de atuação</p>
               <h2>Assessoria jurídica estratégica e personalizada</h2>
               <p>
-                Atuação preventiva, consultiva e contenciosa para famílias,
-                patrimônios e empresas, de acordo com as necessidades de cada
-                cliente.
+                Atuação preventiva, consultiva e contenciosa em diversas áreas do Direito, de acordo 
+                com as necessidades de cada cliente.
+
               </p>
             </div>
 
