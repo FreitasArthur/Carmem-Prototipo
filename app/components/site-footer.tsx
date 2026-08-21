@@ -33,8 +33,8 @@ export function SiteFooter() {
         <div className="footer-contact">
           <p>OAB/SC 8.862</p>
           <p>{officePhone}</p>
-          <p>Instagram @advocaciacarmemtestoni</p>
           <p>{officeEmail}</p>
+          <p>Instagram @advocaciacarmemtestoni</p>
           <p>{officeAddress}</p>
         </div>
 

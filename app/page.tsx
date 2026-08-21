@@ -3,20 +3,15 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   ArrowRight,
-  BriefcaseBusiness,
   CalendarCheck,
   FileText,
-  HeartHandshake,
-  Landmark,
   Mail,
   MapPin,
   Phone,
-  ScrollText,
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
-import Link from "next/link";
 import { useState } from "react";
 import {
   contactFields,
@@ -26,6 +21,7 @@ import {
 } from "./contact-form-validation.mjs";
 import type { ContactField } from "./contact-form-validation.mjs";
 import { InstagramProfile } from "./components/instagram-profile";
+import { PracticeAreasCarousel } from "./components/practice-areas-carousel";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import { WhatsappIcon } from "./components/whatsapp-icon";
@@ -66,59 +62,26 @@ const serviceSteps = [
   },
 ];
 
-const practiceAreas = [
-  {
-    title: "Planejamento patrimonial e sucessório",
-    icon: ShieldCheck,
-    slug: "planejamento-patrimonial-e-sucessorio",
-    text: "Estruturação jurídica para organizar, proteger e transmitir o patrimônio em vida, reduzindo conflitos futuros entre herdeiros e otimizando aspectos tributários e sucessórios.",
-  },
-  {
-    title: "Empresarial",
-    icon: BriefcaseBusiness,
-    slug: "empresarial",
-    text: "Assessoria jurídica estratégica para empresas e empresários, com foco na prevenção de riscos e na segurança das relações comerciais.",
-  },
-  {
-    title: "Tributário",
-    icon: Landmark,
-    slug: "tributario",
-    text: "Análise da carga tributária e desenvolvimento de estratégias fiscais compatíveis com a legislação, reduzindo riscos e contingências para pessoas físicas e empresas.",
-  },
-  {
-    title: "Sucessões",
-    icon: ScrollText,
-    slug: "direito-das-sucessoes",
-    text: "Condução de inventários, partilhas e testamentos, com atenção à sensibilidade do momento e busca por soluções ágeis e seguras para a família.",
-  },
-  {
-    title: "Trabalhista",
-    icon: HeartHandshake,
-    slug: "direito-de-familia",
-    text: "Orientação preventiva e defesa em questões trabalhistas, ajudando o empresário a reduzir passivos e manter a conformidade nas relações de trabalho.",
-  },
-];
-
 const differentiators = [
   {
     title: "Análise individualizada",
     icon: FileText,
-    text: "Cada situação é avaliada de acordo com suas particularidades, objetivos e possíveis impactos jurídicos.",
+    text: "Nenhuma solução pronta. Cada caso é estudado a fundo, considerando particularidades, objetivos e riscos jurídicos que só uma análise dedicada revela.",
   },
   {
     title: "Atuação preventiva",
     icon: ShieldCheck,
-    text: "O trabalho preventivo permite identificar riscos e estruturar decisões com maior segurança.",
+    text: "Agir antes do problema custa menos e protege mais. Identificamos riscos e estruturamos decisões com segurança, evitando conflitos e prejuízos futuros.",
   },
   {
     title: "Visão integrada",
     icon: UsersRound,
-    text: "As questões familiares, patrimoniais, empresariais e tributárias são analisadas de forma conjunta quando necessário.",
+    text: "Direito de família, patrimônio, empresa e tributos raramente andam separados. Analisamos tudo em conjunto para que nenhuma decisão comprometa outra área da sua vida ou do seu negócio.",
   },
   {
-    title: "Atendimento presencial e on-line",
+    title: "Atendimento próximo e acessível",
     icon: CalendarCheck,
-    text: "O escritório realiza atendimentos presenciais em Joinville e também oferece atendimento por meios digitais.",
+    text: "Presencial em Joinville ou on-line, o cliente tem acesso direto ao escritório, com linguagem clara e disponibilidade real — não apenas formalidade.",
   },
 ];
 
@@ -357,26 +320,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="practice-grid">
-              {practiceAreas.map((area) => {
-                const Icon = area.icon;
-                return (
-                  <article className="practice-card" key={area.title}>
-                    <div className="card-icon">
-                      <Icon aria-hidden="true" />
-                    </div>
-                    <h3>{area.title}</h3>
-                    <p>{area.text}</p>
-                    <Link
-                      className="practice-card-link"
-                      href={`/areas-de-atuacao/${area.slug}`}
-                    >
-                      Saiba mais
-                    </Link>
-                  </article>
-                );
-              })}
-            </div>
+            <PracticeAreasCarousel />
           </div>
         </section>
 
@@ -531,12 +475,12 @@ export default function Home() {
                 >
                   <option value="">Selecione</option>
                   <option value="Planejamento patrimonial e sucessório">
-                    Planejamento patrimonial e sucessório
-                  </option>
-                  <option value="Direito empresarial">Direito empresarial</option>
-                  <option value="Direito tributário">Direito tributário</option>
-                  <option value="Direito das sucessões">Direito das sucessões</option>
-                  <option value="Direito de família">Direito de família</option>
+                    Sucessões e Planejamento patrimonial</option>
+                  <option value="Empresarial">Tributário, Societário e Empresarial</option>
+                  <option value="Trabalhista">Trabalhista</option>
+                  <option value="Imobiliário">Imobiliário</option>
+                  <option value="Cível">Cível e Consumidor</option>
+                  <option value="Família">Família</option>
                   <option value="Outro assunto">Outro assunto</option>
                 </select>
               </div>
@@ -552,19 +496,21 @@ export default function Home() {
                 />
               </div>
 
-              <label className="privacy-check">
+              <div className="privacy-check">
                 <input
+                  id="privacy-consent"
                   name="privacy"
                   type="checkbox"
                   checked={form.privacy}
                   onChange={handleFieldChange}
+                  aria-labelledby="privacy-consent-text"
                   required
                 />
-                <span>
+                <span id="privacy-consent-text">
                   Declaro que li o aviso de privacidade e autorizo o uso dos
                   dados enviados exclusivamente para retorno do contato.
                 </span>
-              </label>
+              </div>
 
               <button className="button button-primary form-submit" type="submit">
                 Enviar mensagem
