@@ -3,20 +3,15 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   ArrowRight,
-  BriefcaseBusiness,
   CalendarCheck,
   FileText,
-  HeartHandshake,
-  Landmark,
   Mail,
   MapPin,
   Phone,
-  ScrollText,
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
 import type { CSSProperties, ChangeEvent, FormEvent } from "react";
-import Link from "next/link";
 import { useState } from "react";
 import {
   contactFields,
@@ -26,6 +21,7 @@ import {
 } from "./contact-form-validation.mjs";
 import type { ContactField } from "./contact-form-validation.mjs";
 import { InstagramProfile } from "./components/instagram-profile";
+import { PracticeAreasCarousel } from "./components/practice-areas-carousel";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import { WhatsappIcon } from "./components/whatsapp-icon";
@@ -47,7 +43,7 @@ const serviceSteps = [
   {
     step: "01",
     title: "Contato inicial",
-    text: "O cliente apresenta brevemente sua necessidade e solicita o agendamento.",
+    text: "O cliente apresenta sua necessidade e solicita o agendamento do atendimento inicial.",
   },
   {
     step: "02",
@@ -66,59 +62,26 @@ const serviceSteps = [
   },
 ];
 
-const practiceAreas = [
-  {
-    title: "Planejamento patrimonial e sucessório",
-    icon: ShieldCheck,
-    slug: "planejamento-patrimonial-e-sucessorio",
-    text: "Estruturação jurídica voltada à organização, proteção e transmissão do patrimônio, considerando os objetivos da família e os aspectos sucessórios e tributários envolvidos.",
-  },
-  {
-    title: "Empresarial",
-    icon: BriefcaseBusiness,
-    slug: "empresarial",
-    text: "Assessoria jurídica estratégica para empresas, empresários e famílias empresárias, com foco na prevenção de riscos e na segurança das relações comerciais.",
-  },
-  {
-    title: "Tributário",
-    icon: Landmark,
-    slug: "tributario",
-    text: "Análise jurídica das obrigações tributárias e desenvolvimento de estratégias compatíveis com a legislação e com a realidade de cada cliente ou empresa.",
-  },
-  {
-    title: "Direito das sucessões",
-    icon: ScrollText,
-    slug: "direito-das-sucessoes",
-    text: "Orientação jurídica em questões relacionadas à herança, inventário, partilha e transmissão de bens, buscando proporcionar organização e segurança às famílias.",
-  },
-  {
-    title: "Direito de família",
-    icon: HeartHandshake,
-    slug: "direito-de-familia",
-    text: "Atuação cuidadosa em questões familiares, considerando tanto os aspectos jurídicos quanto a sensibilidade das relações envolvidas.",
-  },
-];
-
 const differentiators = [
   {
     title: "Análise individualizada",
     icon: FileText,
-    text: "Cada situação é avaliada de acordo com suas particularidades, objetivos e possíveis impactos jurídicos.",
+    text: "Nenhuma solução pronta. Cada caso é estudado a fundo, considerando particularidades, objetivos e riscos jurídicos que só uma análise dedicada revela.",
   },
   {
     title: "Atuação preventiva",
     icon: ShieldCheck,
-    text: "O trabalho preventivo permite identificar riscos e estruturar decisões com maior segurança.",
+    text: "Agir antes do problema custa menos e protege mais. Identificamos riscos e estruturamos decisões com segurança, evitando conflitos e prejuízos futuros.",
   },
   {
     title: "Visão integrada",
     icon: UsersRound,
-    text: "As questões familiares, patrimoniais, empresariais e tributárias são analisadas de forma conjunta quando necessário.",
+    text: "Direito de família, patrimônio, empresa e tributos raramente andam separados. Analisamos tudo em conjunto para que nenhuma decisão comprometa outra área da sua vida ou do seu negócio.",
   },
   {
-    title: "Atendimento presencial e on-line",
+    title: "Atendimento próximo e acessível",
     icon: CalendarCheck,
-    text: "O escritório realiza atendimentos presenciais em Joinville e também oferece atendimento por meios digitais.",
+    text: "Presencial em Joinville ou on-line, o cliente tem acesso direto ao escritório, com linguagem clara e disponibilidade real — não apenas formalidade.",
   },
 ];
 
@@ -263,11 +226,9 @@ export default function Home() {
           <div className="section-inner hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">Escritório de Advocacia | Carmem Testoni</p>
-              <h1>Proteção patrimonial e assessoria jurídica estratégica</h1>
+              <h1>O que você construiu merece a proteção jurídica certa</h1>
               <p className="hero-lead">
-                Soluções jurídicas personalizadas para famílias, patrimônios e
-                empresas, conduzidas com estratégia, segurança e atenção às
-                particularidades de cada cliente.
+                Soluções personalizadas em patrimônio, empresas e família, com a estratégia e a discrição que cada situação exige.
               </p>
               <div className="hero-actions" aria-label="Ação principal">
                 <a
@@ -289,16 +250,14 @@ export default function Home() {
           <div className="section-inner about-grid">
             <div className="section-copy">
               <p className="eyebrow">O escritório</p>
-              <h2>Assessoria jurídica com visão estratégica</h2>
+              <h2>Mais que assessoria, uma parceria de confiança</h2>
               <p>
-                A Carmem Testoni | Advogados Associados atua na proteção do
-                patrimônio, na organização das relações familiares e sucessórias
-                e na assessoria estratégica de empresas e famílias empresárias.
+                Atuamos na proteção do patrimônio, na organização das relações familiares e sucessórias e no apoio jurídico 
+                estratégico a empresas e famílias empresárias — sempre com a atenção que cada história merece.
               </p>
               <p>
-                Cada situação é analisada individualmente, considerando seus
-                aspectos jurídicos, patrimoniais, tributários, empresariais e
-                familiares. O trabalho é pautado pela ética, transparência,
+                Cada situação é analisada individualmente, considerando seus 
+                aspectos jurídicos, patrimoniais, tributários, empresariais e familiares. O trabalho é pautado pela ética, transparência, 
                 discrição e comunicação clara.
               </p>
             </div>
@@ -355,32 +314,13 @@ export default function Home() {
               <p className="eyebrow">Áreas de atuação</p>
               <h2>Assessoria jurídica estratégica e personalizada</h2>
               <p>
-                Atuação preventiva, consultiva e contenciosa para famílias,
-                patrimônios e empresas, de acordo com as necessidades de cada
-                cliente.
+                Atuação preventiva, consultiva e contenciosa em diversas áreas do Direito, de acordo 
+                com as necessidades de cada cliente.
+
               </p>
             </div>
 
-            <div className="practice-grid">
-              {practiceAreas.map((area) => {
-                const Icon = area.icon;
-                return (
-                  <article className="practice-card" key={area.title}>
-                    <div className="card-icon">
-                      <Icon aria-hidden="true" />
-                    </div>
-                    <h3>{area.title}</h3>
-                    <p>{area.text}</p>
-                    <Link
-                      className="practice-card-link"
-                      href={`/areas-de-atuacao/${area.slug}`}
-                    >
-                      Saiba mais
-                    </Link>
-                  </article>
-                );
-              })}
-            </div>
+            <PracticeAreasCarousel />
           </div>
         </section>
 
@@ -535,12 +475,12 @@ export default function Home() {
                 >
                   <option value="">Selecione</option>
                   <option value="Planejamento patrimonial e sucessório">
-                    Planejamento patrimonial e sucessório
-                  </option>
-                  <option value="Direito empresarial">Direito empresarial</option>
-                  <option value="Direito tributário">Direito tributário</option>
-                  <option value="Direito das sucessões">Direito das sucessões</option>
-                  <option value="Direito de família">Direito de família</option>
+                    Sucessões e Planejamento patrimonial</option>
+                  <option value="Empresarial">Tributário, Societário e Empresarial</option>
+                  <option value="Trabalhista">Trabalhista</option>
+                  <option value="Imobiliário">Imobiliário</option>
+                  <option value="Cível">Cível e Consumidor</option>
+                  <option value="Família">Família</option>
                   <option value="Outro assunto">Outro assunto</option>
                 </select>
               </div>
@@ -556,19 +496,21 @@ export default function Home() {
                 />
               </div>
 
-              <label className="privacy-check">
+              <div className="privacy-check">
                 <input
+                  id="privacy-consent"
                   name="privacy"
                   type="checkbox"
                   checked={form.privacy}
                   onChange={handleFieldChange}
+                  aria-labelledby="privacy-consent-text"
                   required
                 />
-                <span>
+                <span id="privacy-consent-text">
                   Declaro que li o aviso de privacidade e autorizo o uso dos
                   dados enviados exclusivamente para retorno do contato.
                 </span>
-              </label>
+              </div>
 
               <button className="button button-primary form-submit" type="submit">
                 Enviar mensagem

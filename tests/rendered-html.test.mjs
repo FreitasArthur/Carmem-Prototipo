@@ -76,17 +76,18 @@ test("keeps the site independent from former starter runtimes", async () => {
 });
 
 test("preserves the main landing page content and contact flow", async () => {
-  const [page, layout, siteData] = await Promise.all([
+  const [page, layout, siteData, carousel] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/practice-areas-carousel.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.match(layout, /Carmem Testoni \| Advogados Associados em Joinville/);
-  assert.match(page, /Proteção patrimonial e assessoria jurídica estratégica/);
+  assert.match(page, /O que você construiu merece a proteção jurídica certa/);
   assert.match(page, /https:\/\/wa\.me\/\$\{officeWhatsapp\}/);
-  assert.match(page, /Planejamento patrimonial e sucessório/);
-  assert.match(page, /Direito empresarial/);
+  assert.match(carousel, /Planejamento patrimonial e sucessório/);
+  assert.match(carousel, /Empresarial/);
   assert.doesNotMatch(page, /Conheça nossa atuação/);
   assert.match(page, /className="button hero-contact-button"/);
   assert.match(page, /className="social-link process-whatsapp-link"/);
@@ -189,25 +190,48 @@ test("uses the official symbol in the footer and browser metadata", async () => 
   assert.doesNotMatch(footer, /brand-mark/);
 });
 
-test("provides a placeholder page for every practice area", async () => {
+test("keeps every practice area in one adjustable two-at-a-time carousel", async () => {
   const practiceAreas = [
     ["planejamento-patrimonial-e-sucessorio", "Planejamento patrimonial e sucessório"],
     ["empresarial", "Empresarial"],
     ["tributario", "Tributário"],
-    ["direito-das-sucessoes", "Direito das sucessões"],
-    ["direito-de-familia", "Direito de família"],
+    ["direito-das-sucessoes", "Sucessões"],
+    ["direito-de-familia", "Trabalhista"],
+    ["societario", "Societário"],
+    ["imobiliario", "Imobiliário"],
+    ["civel", "Cível"],
+    ["familia", "Família"],
+    ["consumidor", "Consumidor"],
   ];
+  const [page, carousel, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/practice-areas-carousel.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /<PracticeAreasCarousel \/>/);
+  assert.doesNotMatch(page, /Saiba mais/);
+  assert.match(carousel, /PRACTICE_CAROUSEL_INTERVAL_MS = \d+/);
+  assert.match(carousel, /practiceAreas\.slice\(index \* 2, index \* 2 \+ 2\)/);
+  assert.match(carousel, /window\.setInterval\(showNext, PRACTICE_CAROUSEL_INTERVAL_MS\)/);
+  assert.match(carousel, /setTimerRevision\(\(revision\) => revision \+ 1\)/);
+  assert.match(carousel, /\[prefersReducedMotion, showNext, timerRevision\]/);
+  assert.match(carousel, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(carousel, /ChevronLeft|ChevronRight|Pause|Play/);
+  assert.doesNotMatch(styles, /\.practice-carousel-controls/);
+  assert.match(styles, /\.practice-carousel-track/);
+  assert.match(styles, /\.practice-carousel-slide\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
+  assert.match(styles, /\.practice-carousel\s*\{[^}]*--carousel-overhang:[^}]*width:\s*calc\(100% \+ var\(--carousel-overhang\)\)/s);
+  assert.match(styles, /\.practice-story\s*\{[^}]*align-items:\s*center/s);
+  assert.doesNotMatch(carousel, /const absoluteIndex/);
+  assert.doesNotMatch(styles, /\.practice-story-copy > span/);
+  assert.doesNotMatch(styles, /\.practice-card(?:\s|\{|:)/);
 
   for (const [slug, title] of practiceAreas) {
-    const detailPage = await readFile(
-      new URL(`../app/areas-de-atuacao/${slug}/page.tsx`, import.meta.url),
-      "utf8",
+    assert.match(carousel, new RegExp(title));
+    await assert.rejects(
+      readFile(new URL(`../app/areas-de-atuacao/${slug}/page.tsx`, import.meta.url), "utf8"),
+      { code: "ENOENT" },
     );
-
-    assert.match(detailPage, new RegExp(title));
-    assert.match(detailPage, /<SiteHeader \/>/);
-    assert.match(detailPage, /practice-detail-placeholder/);
-    assert.match(detailPage, /Insira aqui o conteúdo desta área de atuação/);
-    assert.match(detailPage, /<SiteFooter \/>/);
   }
 });
