@@ -99,5 +99,7 @@ test("limits privacy consent clicks to the checkbox itself", async () => {
   assert.match(privacyControl, /id="privacy-consent"/);
   assert.match(privacyControl, /aria-labelledby="privacy-consent-text"/);
   assert.match(privacyControl, /<span id="privacy-consent-text">/);
+  assert.match(privacyControl, /className="privacy-notice-trigger"/);
+  assert.match(privacyControl, /aria-haspopup="dialog"/);
   assert.doesNotMatch(privacyControl, /<label|htmlFor=/);
 });

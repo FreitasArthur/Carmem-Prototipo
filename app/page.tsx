@@ -20,8 +20,15 @@ import {
   validateContactField,
 } from "./contact-form-validation.mjs";
 import type { ContactField } from "./contact-form-validation.mjs";
+import {
+  buildContactWhatsappMessage,
+  contactSubjects,
+  privacyConsentText,
+  privacyNoticeLabel,
+} from "./contact-whatsapp-message.mjs";
 import { InstagramProfile } from "./components/instagram-profile";
 import { PracticeAreasCarousel } from "./components/practice-areas-carousel";
+import { PrivacyNoticeModal } from "./components/privacy-notice-modal";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import { WhatsappIcon } from "./components/whatsapp-icon";
@@ -98,11 +105,15 @@ type FormState = typeof initialForm;
 type FormStatus = "idle" | "error" | "success";
 type FieldErrors = Partial<Record<ContactField, string>>;
 
+const [privacyConsentPrefix, privacyConsentSuffix] =
+  privacyConsentText.split(privacyNoticeLabel);
+
 export default function Home() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
 
   function updateFieldError(field: ContactField, value: string, onlyIfVisible = false) {
     setFieldErrors((current) => {
@@ -192,18 +203,7 @@ export default function Home() {
       return;
     }
 
-    const message = [
-      "Olá. Acessei o site da Carmem Testoni | Advogados Associados e gostaria de solicitar informações sobre o atendimento.",
-      "",
-      `Nome: ${form.name}`,
-      `Telefone: ${form.phone}`,
-      `E-mail: ${form.email}`,
-      `Assunto: ${form.subject}`,
-      "",
-      `Mensagem: ${form.message}`,
-      "",
-      "Declaro que li o aviso de privacidade e autorizo o uso dos dados enviados exclusivamente para retorno do contato.",
-    ].join("\n");
+    const message = buildContactWhatsappMessage(form);
 
     setStatus("success");
     setFeedback("Mensagem validada. O WhatsApp será aberto para concluir o envio.");
@@ -474,14 +474,11 @@ export default function Home() {
                   required
                 >
                   <option value="">Selecione</option>
-                  <option value="Planejamento patrimonial e sucessório">
-                    Sucessões e Planejamento patrimonial</option>
-                  <option value="Empresarial">Tributário, Societário e Empresarial</option>
-                  <option value="Trabalhista">Trabalhista</option>
-                  <option value="Imobiliário">Imobiliário</option>
-                  <option value="Cível">Cível e Consumidor</option>
-                  <option value="Família">Família</option>
-                  <option value="Outro assunto">Outro assunto</option>
+                  {contactSubjects.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -507,8 +504,17 @@ export default function Home() {
                   required
                 />
                 <span id="privacy-consent-text">
-                  Declaro que li o aviso de privacidade e autorizo o uso dos
-                  dados enviados exclusivamente para retorno do contato.
+                  {privacyConsentPrefix}
+                  <button
+                    className="privacy-notice-trigger"
+                    type="button"
+                    aria-controls="privacy-notice-dialog"
+                    aria-haspopup="dialog"
+                    onClick={() => setIsPrivacyModalOpen(true)}
+                  >
+                    {privacyNoticeLabel}
+                  </button>
+                  {privacyConsentSuffix}
                 </span>
               </div>
 
@@ -532,6 +538,10 @@ export default function Home() {
         <InstagramProfile />
       </main>
 
+      <PrivacyNoticeModal
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setIsPrivacyModalOpen(false)}
+      />
       <SiteFooter />
     </>
   );

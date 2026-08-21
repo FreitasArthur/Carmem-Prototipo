@@ -99,6 +99,14 @@ test("preserves the main landing page content and contact flow", async () => {
   assert.match(siteData, /officeEmail = "contato@carmemtestoni\.com\.br"/);
 });
 
+test("sends every displayed contact subject unchanged in the WhatsApp message", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /contactSubjects\.map\(\(subject\) => \(/);
+  assert.match(page, /<option key=\{subject\} value=\{subject\}>\s*\{subject\}/);
+  assert.match(page, /buildContactWhatsappMessage\(form\)/);
+});
+
 test("keeps the official office photo proportional on responsive layouts", async () => {
   const [page, styles, officePhoto] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),

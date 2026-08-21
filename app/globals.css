@@ -1200,6 +1200,105 @@ input[aria-invalid="true"]:focus {
   cursor: pointer;
 }
 
+.privacy-notice-trigger {
+  display: inline;
+  border: 0;
+  background: transparent;
+  color: var(--wine-strong);
+  padding: 0;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--champagne);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.privacy-notice-trigger:hover,
+.privacy-notice-trigger:focus-visible {
+  color: var(--wine-soft);
+  text-decoration-color: var(--wine-soft);
+}
+
+.privacy-modal {
+  width: min(620px, calc(100% - 32px));
+  max-height: min(82vh, 720px);
+  border: 1px solid rgba(53, 72, 60, 0.18);
+  border-radius: 10px;
+  background: var(--champagne-light);
+  color: var(--graphite);
+  box-shadow: 0 28px 80px rgba(40, 56, 47, 0.28);
+  padding: 0;
+  overflow: auto;
+}
+
+.privacy-modal::backdrop {
+  background: rgba(24, 34, 28, 0.66);
+  backdrop-filter: blur(3px);
+}
+
+.privacy-modal-content {
+  position: relative;
+  padding: 52px clamp(24px, 6vw, 52px) 42px;
+}
+
+.privacy-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--wine-strong);
+  padding: 4px;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.privacy-modal-close:hover,
+.privacy-modal-close:focus-visible {
+  color: var(--wine-soft);
+}
+
+.privacy-modal-close svg {
+  width: 19px;
+  height: 19px;
+}
+
+.privacy-modal h2 {
+  margin-bottom: 26px;
+  padding: 0 42px;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  text-align: center;
+}
+
+.privacy-modal-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.privacy-modal-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.72;
+}
+
+.privacy-modal-copy strong {
+  color: var(--wine-strong);
+}
+
+.privacy-modal-copy a {
+  color: var(--wine-strong);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .form-submit {
   width: fit-content;
 }
@@ -2006,6 +2105,15 @@ input[aria-invalid="true"]:focus {
 
   .form-submit {
     width: 100%;
+  }
+
+  .privacy-modal-content {
+    padding: 52px 22px 30px;
+  }
+
+  .privacy-modal h2 {
+    padding: 0 30px;
+    font-size: 2rem;
   }
 }
 
