@@ -85,9 +85,9 @@ export function PrivacyNoticeModal({ isOpen, onClose }: PrivacyNoticeModalProps)
             ou exclusão dos seus dados a qualquer momento, entrando em contato
             pelo e-mail{" "}
             <a href="mailto:contato@carmemtestoni.com">
-              contato@carmemtestoni.com
+              contato@carmemtestoni.com.br
             </a>
-            .
+            
           </p>
         </div>
       </div>
