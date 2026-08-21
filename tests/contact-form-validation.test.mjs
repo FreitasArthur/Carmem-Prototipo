@@ -88,3 +88,16 @@ test("keeps validation messages out of the form layout flow", async () => {
     /@media \(max-width:\s*640px\)[\s\S]*?\.two-columns\s*\{[^}]*grid-template-columns:\s*1fr;/s,
   );
 });
+
+test("limits privacy consent clicks to the checkbox itself", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const privacyControl = page.match(
+    /<div className="privacy-check">[\s\S]*?<\/div>/,
+  )?.[0];
+
+  assert.ok(privacyControl);
+  assert.match(privacyControl, /id="privacy-consent"/);
+  assert.match(privacyControl, /aria-labelledby="privacy-consent-text"/);
+  assert.match(privacyControl, /<span id="privacy-consent-text">/);
+  assert.doesNotMatch(privacyControl, /<label|htmlFor=/);
+});
