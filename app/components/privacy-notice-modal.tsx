@@ -3,6 +3,7 @@
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { privacyNoticeLabel } from "../contact-whatsapp-message.mjs";
+import { officeEmail } from "../site-data";
 
 type PrivacyNoticeModalProps = {
   isOpen: boolean;
@@ -84,10 +85,7 @@ export function PrivacyNoticeModal({ isOpen, onClose }: PrivacyNoticeModalProps)
             <strong>Seus direitos:</strong> você pode solicitar acesso, correção
             ou exclusão dos seus dados a qualquer momento, entrando em contato
             pelo e-mail{" "}
-            <a href="mailto:contato@carmemtestoni.com">
-              contato@carmemtestoni.com.br
-            </a>
-            
+            <a href={`mailto:${officeEmail}`}>{officeEmail}</a>.
           </p>
         </div>
       </div>

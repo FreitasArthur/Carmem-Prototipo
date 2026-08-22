@@ -49,11 +49,15 @@ test("locks background scrolling without moving or restoring the page position",
 });
 
 test("keeps the requested privacy notice content and contact email", async () => {
-  const modal = normalizeWhitespace(
-    await readFile(new URL("../app/components/privacy-notice-modal.tsx", import.meta.url), "utf8"),
-  );
+  const [modal, siteData] = await Promise.all([
+    readFile(new URL("../app/components/privacy-notice-modal.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-data.ts", import.meta.url), "utf8"),
+  ]);
+  const normalizedModal = normalizeWhitespace(modal);
 
-  assert.match(modal, /Ao preencher este formulário, você nos fornece: nome e número de WhatsApp \(e, opcionalmente, mensagem\)\./);
-  assert.match(modal, /<strong>Finalidade:<\/strong> utilizamos esses dados exclusivamente para retornar seu contato via WhatsApp e responder à sua solicitação\./);
-  assert.match(modal, /<strong>Seus direitos:<\/strong> você pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento, entrando em contato pelo e-mail\{" "\} <a href="mailto:contato@carmemtestoni\.com"> contato@carmemtestoni\.com <\/a> \./);
+  assert.match(siteData, /officeEmail = "contato@carmemtestoni\.com\.br"/);
+  assert.match(normalizedModal, /import \{ officeEmail \} from "\.\.\/site-data";/);
+  assert.match(normalizedModal, /Ao preencher este formulário, você nos fornece: nome e número de WhatsApp \(e, opcionalmente, mensagem\)\./);
+  assert.match(normalizedModal, /<strong>Finalidade:<\/strong> utilizamos esses dados exclusivamente para retornar seu contato via WhatsApp e responder à sua solicitação\./);
+  assert.match(normalizedModal, /<strong>Seus direitos:<\/strong> você pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento, entrando em contato pelo e-mail\{" "\} <a href=\{`mailto:\$\{officeEmail\}`\}>\{officeEmail\}<\/a>\./);
 });
